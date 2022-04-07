@@ -2,8 +2,8 @@
 
 class BD{
     private $host = 'localhost';
-    private $user = 'root';
-    private $pass = '';
+    private $user = 'mauricio';
+    private $pass = '1234';
     private $nombreBD = 'restauranteplanb';
 
     public function conexionBD(){
