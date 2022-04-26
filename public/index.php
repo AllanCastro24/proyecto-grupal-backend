@@ -337,6 +337,30 @@ $app->put('/api/tipo_gastos/baja/{id}',function (Request $request, Response $res
    }
 });
 
+//Consultas de VENTAS
+/**=======================================================================
+ * =======================================================================
+ * SECCIÓN DE CONSULTAS DE VENTAS
+ * Mes, Año, dia, rango de fechas
+ * =======================================================================
+ */
+
+
+$app->get('/api/ventas/mes/{mes}', function(Request $request, Response $response){
+  $mes = $request->getAttribute('mes');
+  $consulta = "SELECT * FROM ventas WHERE MONTH(fecha) = '$mes' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
 
 
 $app->run();
