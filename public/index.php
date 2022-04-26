@@ -345,7 +345,7 @@ $app->put('/api/tipo_gastos/baja/{id}',function (Request $request, Response $res
  * =======================================================================
  */
 
-
+//CONSULTA POR MES
 $app->get('/api/ventas/mes/{mes}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
   $consulta = "SELECT * FROM ventas WHERE MONTH(fecha) = '$mes' ";
@@ -361,6 +361,59 @@ $app->get('/api/ventas/mes/{mes}', function(Request $request, Response $response
       echo '{"error": {"text":  '.$e->getMessage().'}';
   }
 });
+
+//CONSULTA POR AÑO
+$app->get('/api/ventas/year/{year}', function(Request $request, Response $response){
+  $year = $request->getAttribute('year');
+  $consulta = "SELECT * FROM ventas WHERE YEAR(fecha) = '$year' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+//CONSULTA POR DIA
+$app->get('/api/ventas/day/{day}', function(Request $request, Response $response){
+  $day = $request->getAttribute('day');
+  $consulta = "SELECT * FROM ventas WHERE fecha = '$day' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+//CONSULTA POR RANGO
+$app->get('/api/ventas/range/{inicio}/{fin}', function(Request $request, Response $response){
+  $inicio = $request->getAttribute('inicio');
+  $fin = $request->getAttribute('fin');
+  $consulta = "SELECT * FROM ventas WHERE fecha BETWEEN '$inicio' AND '$fin';";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
 
 
 $app->run();
