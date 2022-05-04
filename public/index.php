@@ -157,18 +157,15 @@ $app->put('/api/costos_fijos/update/{id}',function (Request $request, Response $
 
 //Dar de baja
 $app->put('/api/costos_fijos/baja/{id}',function (Request $request, Response $response, array $args) {
-   $id = $request->getAttribute('id');
-   $data = $request->getParsedBody();
-   $status = $data["status"];
+  $id = $request->getAttribute('id');
+  $data = $request->getParsedBody();
+  $status = $data["status"];
   
-   $sql = "UPDATE gastos_fijos SET
-             status = :status
-   WHERE id_gasto = '$id' ";
   
    try {
      $db = new BD();
      $db = $db->conexionBD();
-    
+      $sql = "UPDATE gastos_fijos SET status = '2' WHERE id_gasto = '$id' ";
      $resultado = $db->prepare($sql);
      $resultado->bindParam(':status', $status);
 
@@ -348,7 +345,7 @@ $app->put('/api/tipo_gastos/baja/{id}',function (Request $request, Response $res
 //CONSULTA POR MES
 $app->get('/api/ventas/mes/{mes}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
-  $consulta = "SELECT * FROM ventas WHERE MONTH(fecha) = '$mes' ";
+  $consulta = "SELECT * FROM vista_ventas4 WHERE MONTH(fecha) = '$mes' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -365,7 +362,7 @@ $app->get('/api/ventas/mes/{mes}', function(Request $request, Response $response
 //CONSULTA POR AÑO
 $app->get('/api/ventas/year/{year}', function(Request $request, Response $response){
   $year = $request->getAttribute('year');
-  $consulta = "SELECT * FROM ventas WHERE YEAR(fecha) = '$year' ";
+  $consulta = "SELECT * FROM vista_ventas4 WHERE YEAR(fecha) = '$year' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -382,7 +379,7 @@ $app->get('/api/ventas/year/{year}', function(Request $request, Response $respon
 //CONSULTA POR DIA
 $app->get('/api/ventas/day/{day}', function(Request $request, Response $response){
   $day = $request->getAttribute('day');
-  $consulta = "SELECT * FROM ventas WHERE fecha = '$day' ";
+  $consulta = "SELECT * FROM vista_ventas4 WHERE fecha = '$day' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -400,7 +397,7 @@ $app->get('/api/ventas/day/{day}', function(Request $request, Response $response
 $app->get('/api/ventas/range/{inicio}/{fin}', function(Request $request, Response $response){
   $inicio = $request->getAttribute('inicio');
   $fin = $request->getAttribute('fin');
-  $consulta = "SELECT * FROM ventas WHERE fecha BETWEEN '$inicio' AND '$fin';";
+  $consulta = "SELECT * FROM vista_ventas4 WHERE fecha BETWEEN '$inicio' AND '$fin';";
   try{
       $db = new BD();
       $db = $db->conexionBD();
