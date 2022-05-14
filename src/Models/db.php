@@ -1,10 +1,10 @@
 <?php
 
 class BD{
-    private $host = 'localhost';
-    private $user = 'root';
-    private $pass = '';
-    private $nombreBD = 'restauranteplanb';
+    private $host = '187.216.118.68';
+    private $user = 'pruebas';
+    private $pass = 'xtPduvLlPHo8IPVE';
+    private $nombreBD = 'pruebas';
 
     public function conexionBD(){
         $mysqlConn = "mysql:host=$this->host;dbname=$this->nombreBD";
