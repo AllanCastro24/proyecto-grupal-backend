@@ -34,7 +34,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //consultar gastos fijos
 
 $app->get('/api/costos_fijos/consultar', function(Request $request, Response $response){
-   $consulta = 'SELECT * FROM gastos_fijos';
+   $consulta = 'SELECT * FROM vista_gastos_fijos';
    try{
        $db = new BD();
        $db = $db->conexionBD();
