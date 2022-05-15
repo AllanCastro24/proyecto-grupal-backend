@@ -32,16 +32,30 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //Insertar nombre de usuario, contraseña y correo (Todos se pueden registrar, pero no todos serán empleados)
 
 //Consultar a todos los usuarios y empleados para el admin (falta where id usuario = id_usuario_empleado)
-$app->get('/api/usuarios/consultar', function(Request $request, Response $response){
+$app->get('/api/usuarios/consultar_empleado', function(Request $request, Response $response){
   $consulta = 'SELECT * FROM usuarios,empleado WHERE id_usuario = id_empleado';
   try{
       $db = new BD();
       $db = $db->conexionBD();
       $ejecutar = $db->query($consulta);
-      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $user = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $response->getBody()->write(json_encode($user));
       $db = null;
-      $response->getBody()->write(json_encode($gastos));
-      return $response;// $gastos;
+      return $response;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+$app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
+  $consulta = 'SELECT * FROM usuarios,empleado WHERE id_usuario <> id_empleado';
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $user = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($user));
+      return $response;
   } catch(PDOException $e){
       echo '{"error": {"text":  '.$e->getMessage().'}';
   }
