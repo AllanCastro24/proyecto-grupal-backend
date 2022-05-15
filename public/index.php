@@ -30,7 +30,20 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //Insertar nombre de usuario, contraseña y correo
 
 //Consultar a todos los usuarios y empleados para el admin
-
+$app->get('/api/usuarios/consultar', function(Request $request, Response $response){
+  $consulta = 'SELECT * FROM usuarios,empleado';
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
 //Loggin
 
 //Modificar usuario
