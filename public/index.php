@@ -27,7 +27,15 @@ $app->get('/', function (Request $request, Response $response, $args) {
  * USUARIOS
  */
 
+//Insertar nombre de usuario, contraseña y correo
 
+//Consultar a todos los usuarios y empleados para el admin
+
+//Loggin
+
+//Modificar usuario
+
+//Modificar empleado
 
 /**=======================================================================
  * =======================================================================
