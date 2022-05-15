@@ -343,9 +343,10 @@ $app->put('/api/tipo_gastos/baja/{id}',function (Request $request, Response $res
  */
 
 //CONSULTA POR MES
-$app->get('/api/ventas/mes/{mes}', function(Request $request, Response $response){
+$app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
-  $consulta = "SELECT * FROM vista_ventas4 WHERE MONTH(fecha) = '$mes' ";
+  $year = $request->getAttribute('year');
+  $consulta = "SELECT * FROM vista_ventas4 WHERE MONTH(fecha) = '$mes'  and year(fecha) = '$year'";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -411,6 +412,82 @@ $app->get('/api/ventas/range/{inicio}/{fin}', function(Request $request, Respons
   }
 });
 
+
+//Consultas de Productos mas y menos vendidos
+/**=======================================================================
+ * =======================================================================
+ * SECCIÓN DE CONSULTAS DE VENTAS
+ * Mes, Año, dia, rango de fechas
+ * =======================================================================
+ */
+//CONSULTA MAS VENDIDO POR MES
+$app->get('/api/producto/mas_vendido/mes/{mes}', function(Request $request, Response $response){
+  $mes = $request->getAttribute('mes');
+  $consulta = "SELECT id_producto, cantidad FROM mas_vendido WHERE MONTH(fecha) = '$mes' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+//CONSULTA MAS VENDIDO POR AÑO
+$app->get('/api/producto/mas_vendido/year/{year}', function(Request $request, Response $response){
+  $year = $request->getAttribute('year');
+  $consulta = "SELECT id_producto, cantidad FROM mas_vendido WHERE year(fecha) = '$year' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+
+//CONSULTA MENOS VENDIDO POR MES
+$app->get('/api/producto/menos_vendido/mes/{mes}', function(Request $request, Response $response){
+  $mes = $request->getAttribute('mes');
+  $consulta = "SELECT id_producto, cantidad FROM menos_vendido WHERE MONTH(fecha) = '$mes' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+//CONSULTA MENOS VENDIDO POR AÑO
+$app->get('/api/producto/menos_vendido/year/{year}', function(Request $request, Response $response){
+  $year = $request->getAttribute('year');
+  $consulta = "SELECT id_producto, cantidad FROM menos_vendido WHERE year(fecha) = '$year' ";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
 
 
 $app->run();
