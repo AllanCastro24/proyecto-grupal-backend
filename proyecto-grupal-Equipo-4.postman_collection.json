@@ -461,6 +461,60 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "sucursales",
+			"item": [
+				{
+					"name": "mostrar sucursales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/proyecto-grupal-backend/public/api/sucursales/consultar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"proyecto-grupal-backend",
+								"public",
+								"api",
+								"sucursales",
+								"consultar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "almacen",
+			"item": [
+				{
+					"name": "mostrar almacen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/proyecto-grupal-backend/public/api/almacen/consultar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"proyecto-grupal-backend",
+								"public",
+								"api",
+								"almacen",
+								"consultar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

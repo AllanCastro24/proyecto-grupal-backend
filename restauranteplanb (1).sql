@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-05-2022 a las 21:31:00
+-- Tiempo de generación: 15-05-2022 a las 22:10:42
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 7.4.19
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `restauranteplanb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `almacen`
+--
+
+CREATE TABLE `almacen` (
+  `id_almacen` int(11) NOT NULL,
+  `id_detalle_insumo` int(11) NOT NULL,
+  `id_sucursal` int(11) NOT NULL,
+  `detalles` varchar(100) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `almacen`
+--
+
+INSERT INTO `almacen` (`id_almacen`, `id_detalle_insumo`, `id_sucursal`, `detalles`, `cantidad`) VALUES
+(1, 1, 1, 'no hay detalles', 50),
+(2, 2, 4, 'sin detalles', 100);
 
 -- --------------------------------------------------------
 
@@ -307,6 +329,20 @@ INSERT INTO `ventas` (`id_venta`, `id_producto`, `cantidad`, `id_mesero`, `fecha
 -- --------------------------------------------------------
 
 --
+-- Estructura Stand-in para la vista `vista_almacen`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_almacen` (
+`id_almacen` int(11)
+,`id_detalle_insumo` int(11)
+,`nom_sucursal` varchar(50)
+,`detalles` varchar(100)
+,`cantidad` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura Stand-in para la vista `vista_ventas4`
 -- (Véase abajo para la vista actual)
 --
@@ -340,6 +376,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Estructura para la vista `vista_almacen`
+--
+DROP TABLE IF EXISTS `vista_almacen`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_almacen`  AS SELECT `almacen`.`id_almacen` AS `id_almacen`, `almacen`.`id_detalle_insumo` AS `id_detalle_insumo`, `sucursal`.`nom_sucursal` AS `nom_sucursal`, `almacen`.`detalles` AS `detalles`, `almacen`.`cantidad` AS `cantidad` FROM (`almacen` join `sucursal` on((`almacen`.`id_sucursal` = `sucursal`.`id_sucursal`)))  ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura para la vista `vista_ventas4`
 --
 DROP TABLE IF EXISTS `vista_ventas4`;
@@ -349,6 +394,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `almacen`
+--
+ALTER TABLE `almacen`
+  ADD PRIMARY KEY (`id_almacen`);
 
 --
 -- Indices de la tabla `gastos_fijos`
@@ -365,6 +416,12 @@ ALTER TABLE `tipo_gasto`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `almacen`
+--
+ALTER TABLE `almacen`
+  MODIFY `id_almacen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `gastos_fijos`

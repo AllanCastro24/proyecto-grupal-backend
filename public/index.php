@@ -490,4 +490,47 @@ $app->get('/api/producto/menos_vendido/year/{year}', function(Request $request, 
 });
 
 
+/**=======================================================================
+ * =======================================================================
+ * SECCIÓN DE CONSULTAS DE SUCURSALES
+ * =======================================================================
+ */
+$app->get('/api/sucursales/consultar', function(Request $request, Response $response){
+  $consulta = 'SELECT * FROM sucursal';
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+/**=======================================================================
+ * =======================================================================
+ * SECCIÓN DE CONSULTAS DE ALMACEN
+ * =======================================================================
+ */
+$app->get('/api/almacen/consultar', function(Request $request, Response $response){
+  $consulta = 'SELECT * FROM almacen';
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
+
+
+
 $app->run();
