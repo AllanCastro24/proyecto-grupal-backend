@@ -423,7 +423,7 @@ $app->get('/api/ventas/range/{inicio}/{fin}', function(Request $request, Respons
 //CONSULTA MAS VENDIDO POR MES
 $app->get('/api/producto/mas_vendido/mes/{mes}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
-  $consulta = "SELECT id_producto, cantidad FROM mas_vendido WHERE MONTH(fecha) = '$mes' ";
+  $consulta = "SELECT name, value FROM mas_vendido2 WHERE MONTH(fecha) = '$mes' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -440,7 +440,7 @@ $app->get('/api/producto/mas_vendido/mes/{mes}', function(Request $request, Resp
 //CONSULTA MAS VENDIDO POR AÑO
 $app->get('/api/producto/mas_vendido/year/{year}', function(Request $request, Response $response){
   $year = $request->getAttribute('year');
-  $consulta = "SELECT id_producto, cantidad FROM mas_vendido WHERE year(fecha) = '$year' ";
+  $consulta = "SELECT name, value FROM mas_vendido2 WHERE year(fecha) = '$year' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -458,7 +458,7 @@ $app->get('/api/producto/mas_vendido/year/{year}', function(Request $request, Re
 //CONSULTA MENOS VENDIDO POR MES
 $app->get('/api/producto/menos_vendido/mes/{mes}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
-  $consulta = "SELECT id_producto, cantidad FROM menos_vendido WHERE MONTH(fecha) = '$mes' ";
+  $consulta = "SELECT name, value FROM menos_vendido2 WHERE MONTH(fecha) = '$mes' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -475,7 +475,7 @@ $app->get('/api/producto/menos_vendido/mes/{mes}', function(Request $request, Re
 //CONSULTA MENOS VENDIDO POR AÑO
 $app->get('/api/producto/menos_vendido/year/{year}', function(Request $request, Response $response){
   $year = $request->getAttribute('year');
-  $consulta = "SELECT id_producto, cantidad FROM menos_vendido WHERE year(fecha) = '$year' ";
+  $consulta = "SELECT name, value FROM menos_vendido2 WHERE year(fecha) = '$year' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -516,7 +516,7 @@ $app->get('/api/sucursales/consultar', function(Request $request, Response $resp
  * =======================================================================
  */
 $app->get('/api/almacen/consultar', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM almacen';
+  $consulta = 'SELECT * FROM vista_almacen';
   try{
       $db = new BD();
       $db = $db->conexionBD();
