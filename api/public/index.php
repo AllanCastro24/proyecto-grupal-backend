@@ -1660,7 +1660,7 @@ $app->delete('/customers-data/delete/{id}', function (Request $request, Response
 
  
 
-  $app->POST('/subirimg', function (Request $request, Response $response, array $args) {
+  $app->POST('/subirimagen', function (Request $request, Response $response, array $args) {
    $data = $request->getParsedBody();
    $img = $data;
    print_r($img);
