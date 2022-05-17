@@ -421,9 +421,10 @@ $app->get('/api/ventas/range/{inicio}/{fin}', function(Request $request, Respons
  * =======================================================================
  */
 //CONSULTA MAS VENDIDO POR MES
-$app->get('/api/producto/mas_vendido/mes/{mes}', function(Request $request, Response $response){
+$app->get('/api/producto/mas_vendido/mes/{mes}/{year}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
-  $consulta = "SELECT name, value FROM mas_vendido2 WHERE MONTH(fecha) = '$mes' ";
+  $year = $request->getAttribute('year');
+  $consulta = "SELECT name, value FROM mas_vendido2 WHERE MONTH(fecha) = '$mes' and year(fecha) = '$year' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -456,9 +457,10 @@ $app->get('/api/producto/mas_vendido/year/{year}', function(Request $request, Re
 
 
 //CONSULTA MENOS VENDIDO POR MES
-$app->get('/api/producto/menos_vendido/mes/{mes}', function(Request $request, Response $response){
+$app->get('/api/producto/menos_vendido/mes/{mes}/{year}', function(Request $request, Response $response){
   $mes = $request->getAttribute('mes');
-  $consulta = "SELECT name, value FROM menos_vendido2 WHERE MONTH(fecha) = '$mes' ";
+  $year = $request->getAttribute('year');
+  $consulta = "SELECT name, value FROM menos_vendido2 WHERE MONTH(fecha) = '$mes' and year(fecha) = '$year' ";
   try{
       $db = new BD();
       $db = $db->conexionBD();
