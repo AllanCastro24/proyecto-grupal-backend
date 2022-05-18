@@ -29,18 +29,65 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
 $app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
-  
+  $data = $request->getParsedBody();
+  $id_user = 7;
+  $nombre = "Irán Alondra";
+  $apellidos = "Gardea Palafox";
+  $sueldo = 750;
+  $direccion = "Che rios calle mazatlan #4";
+  $telefono = "6871571062";
+  $genero = "M";
+  $puesto = 0;
+  $tipo_pago = 0;
+  $tienda = 0;
+
+  $sql = "INSERT INTO pruebas.empleado VALUES($id_user,:nombre, :apellido, :sueldo, :direccion, :telefono, :genero, :puesto, :tipo_pago, :tienda);";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':nombre', $nombre);
+      $resultado->bindParam(':apellido', $apellidos);
+      $resultado->bindParam(':sueldo', $sueldo);
+      $resultado->bindParam(':direccion', $direccion);
+      $resultado->bindParam(':telefono', $telefono);
+      $resultado->bindParam(':genero', $genero);
+      $resultado->bindParam(':puesto', $puesto);
+      $resultado->bindParam(':tipo_pago', $tipo_pago);
+      $resultado->bindParam(':tienda', $tienda);
+      
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se contrató con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
 });
+
 //Insertar nombre de usuario, contraseña y correo (Todos se pueden registrar, pero no todos serán empleados)
 $app->post('/api/usuarios/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $usuario = $data["user"];//"Profe herman";
-  $mail = $data["mail"];//"profeherman@gmail.com";
-  $pass = $data["pass"];//"profe123";
+  $usuario = "Pruebas";//$data["user"];//"Profe herman";
+  $mail = "pruebas@gmail.com";//$data["mail"];//"profeherman@gmail.com";
+  $pass = "pruebas";//$data["pass"];//"profe123";
   $fecha = date('Y-m-d');
 
-  $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S','N','N','S',:fecha,null,:mail)";
+  $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S','N',:fecha,null,:mail)";
   try {
       $db = new BD();
       $db = $db->conexionBD();
