@@ -28,7 +28,9 @@ $app->get('/', function (Request $request, Response $response, $args) {
  */
 
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
-
+$app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
+  
+});
 //Insertar nombre de usuario, contraseña y correo (Todos se pueden registrar, pero no todos serán empleados)
 $app->post('/api/usuarios/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
@@ -72,7 +74,7 @@ $app->post('/api/usuarios/add', function(Request $request, Response $response, a
 
 //Consultar a todos los usuarios y empleados para el admin (falta where id usuario = id_usuario_empleado)
 $app->get('/api/usuarios/consultar_empleado', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM usuarios';
+  $consulta = 'SELECT * FROM usuarios INNER JOIN empleado ON id_usuario = id_empleado';
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -87,7 +89,7 @@ $app->get('/api/usuarios/consultar_empleado', function(Request $request, Respons
 });
 
 $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM usuarios,empleado WHERE id_usuario <> id_empleado';
+  $consulta = 'SELECT * FROM usuarios INNER JOIN empleado ON id_usuario <> id_empleado';
   try{
       $db = new BD();
       $db = $db->conexionBD();
