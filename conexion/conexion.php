@@ -6,9 +6,9 @@ private $pass = '';
 private $nombd = 'planb';
 public function coneccionBD(){
 $mysqlConn = "mysql:host=$this->host;dbname=$this->nombd";
-$dbConn = new PDO($mysqlConn, $this->user, $this->pass);
-$dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
- */
+$dbConn = new PDO($mysqlConn, $this->user, $this->pass); 
+$dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);*/
+
 class BD{
     private $host = '187.216.118.68';
     private $user = 'pruebas';

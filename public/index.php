@@ -157,13 +157,47 @@ $app->get('/cus', function (Request $request, Response $response) {
       ->withStatus(500);
   }
  });
-
- $app->get('/mostpedidoscomple', function (Request $request, Response $response) {
+ 
+ $app->get('/mostpedidoscomple/{idtienda}/{idsuc}', function (Request $request, Response $response) {
   $estatus = "ALTA";
+  $idtienda = $request->getAttribute('idtienda');
+  $idsuc = $request->getAttribute('idsuc');
   //Checar el where de estatus repite varias veces
   //$sql = "SELECT * FROM `pedidoscomida` WHERE estatus = 'ALTA' ";
-  $sql = "SELECT pc.idcli, pc.name, pc.estatus, pc.price, pc.cartCount, pe.id,pe.firstName,pe.lastName,pe.middleName,pe.email, pe.address, pe.city,pe.place,pe.postalCode,pe.phone,pe.descr,pe.namee,pe.valuee,pe.cardNumber,pe.expiredMonth,pe.expiredYear, me.id, me.image FROM `pedidoscomida` pc, `pedidos` pe, `menu` me
-   WHERE  pc.idcli = pe.id AND pc.idpla = me.id AND (pc.estatus = 'Terminado') ";
+  $sql = "SELECT pc.idcli, pc.name, pc.estatus, pc.price, pc.cartCount, pc.idtienda,pc.idsuc, pe.id,pe.firstName,pe.lastName,pe.middleName,pe.email, pe.address, pe.city,pe.place,pe.postalCode,pe.phone,pe.descr,pe.namee,pe.valuee,pe.cardNumber,pe.expiredMonth,pe.expiredYear, me.id, me.image FROM `pedidoscomida` pc, `pedidos` pe, `menu` me
+   WHERE  pc.idcli = pe.id AND pc.idpla = me.id AND (pc.estatus = 'Terminado') AND pc.idtienda = $idtienda AND pc.idsuc = $idsuc";
+  try {
+    $db = new BD();
+    $conn = $db->coneccionBD();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $db = null;
+   
+    $response->getBody()->write(json_encode($customers));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+ 
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
+  }
+ });
+
+ $app->get('/mostpedidoscompletick/{idtienda}/{idsuc}/{id}', function (Request $request, Response $response) {
+  $estatus = "ALTA";
+  $idtienda = $request->getAttribute('idtienda');
+  $idsuc = $request->getAttribute('idsuc');
+  $id = $request->getAttribute('id');
+  //Checar el where de estatus repite varias veces
+  //$sql = "SELECT * FROM `pedidoscomida` WHERE estatus = 'ALTA' ";
+  $sql = "SELECT pc.idcli, pc.name, pc.estatus, pc.price, pc.cartCount, pc.idtienda,pc.idsuc, pe.id,pe.firstName,pe.lastName,pe.middleName,pe.email, pe.address, pe.city,pe.place,pe.postalCode,pe.phone,pe.descr,pe.namee,pe.valuee,pe.cardNumber,pe.expiredMonth,pe.expiredYear, me.id, me.image FROM `pedidoscomida` pc, `pedidos` pe, `menu` me
+  WHERE  pc.idcli = pe.id AND pc.idpla = me.id AND (pc.estatus = 'Terminado') AND pc.idtienda = $idtienda AND pc.idsuc = $idsuc AND pc.idcli = $id ";
   try {
     $db = new BD();
     $conn = $db->coneccionBD();
