@@ -29,41 +29,36 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
 
-//INSERT INTO pruebas.empleado (Nombre, Apellidos, Sueldo, Direccion, Telefono, Genero, Correo, ID_puesto, `ID_tipo-pago`, ID_tienda) VALUES('', '', 0, '', '', '', '', 0, 0, 0);
-
 //Insertar nombre de usuario, contraseña y correo (Todos se pueden registrar, pero no todos serán empleados)
 $app->post('/api/usuarios/add', function(Request $request, Response $response, array $args){
-  //$data = $request->getParsedBody();
-  try {
-  $usuario = "Alondra123";
-  $mail = "alondra.gardea24@gmail.com";
-  $pass = "alondra123";
+  $data = $request->getParsedBody();
+  
+  $usuario = $data["user"];//"Profe herman";
+  $mail = $data["mail"];//"profeherman@gmail.com";
+  $pass = $data["pass"];//"profe123";
   $fecha = date('Y-m-d');
 
- /* $sql = "INSERT INTO usuarios (Usuario, Contraseña, Activo, Inactivo, Bloqueado, Desbloqueado, Fecha-registro, Correo) VALUES
-          (:usuario, :pass, 'S', 'N', 'N', 'S', :fecha, :mail)";*/
-$sql = "INSERT INTO pruebas.usuarios VALUES
-(null,'Allan Castro','allan123','S','N','N','S','2022-05-14','2022-05-14',NULL,'alan.castro.1226.ac@gmail.com')";
-  
+  $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S','N','N','S',:fecha,null,:mail)";
+  try {
       $db = new BD();
       $db = $db->conexionBD();
       $resultado = $db->prepare($sql);
-     /* $resultado->bindParam(':usuario', $usuario);
+      $resultado->bindParam(':usuario', $usuario);
       $resultado->bindParam(':mail', $mail);
       $resultado->bindParam(':pass', $pass);
       $resultado->bindParam(':fecha', $fecha);
-*/
+      
       $resultado->execute();
       
       $db = null;
 
-      $response->getBody()->write("hola");//json_encode($resultado));
+      $response->getBody()->write("Se registró con exito");
       return $response 
           ->withHeader('content-type','aplication/json')
           ->withStatus(200);
-          $resultado = null;
+
   } catch (PDOException $e) {
-      echo '{"errorrrrrrrrrrrrrrrrrr": {"text":  '.$e->getMessage().'}';
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
       $error = array(
           "message" => $e->getMessage()
       );
@@ -77,7 +72,7 @@ $sql = "INSERT INTO pruebas.usuarios VALUES
 
 //Consultar a todos los usuarios y empleados para el admin (falta where id usuario = id_usuario_empleado)
 $app->get('/api/usuarios/consultar_empleado', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM usuarios,empleado WHERE id_usuario = id_empleado';
+  $consulta = 'SELECT * FROM usuarios';
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -90,6 +85,7 @@ $app->get('/api/usuarios/consultar_empleado', function(Request $request, Respons
       echo '{"error": {"text":  '.$e->getMessage().'}';
   }
 });
+
 $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
   $consulta = 'SELECT * FROM usuarios,empleado WHERE id_usuario <> id_empleado';
   try{
