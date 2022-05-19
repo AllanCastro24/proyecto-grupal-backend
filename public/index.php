@@ -34,7 +34,12 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //consultar gastos fijos
 
 $app->get('/api/costos_fijos/consultar', function(Request $request, Response $response){
-   $consulta = 'SELECT * FROM vista_gastos_fijos';
+   $consulta = "SELECT gastos_fijos.id_gasto, tipo_gasto.nombre, gastos_fijos.descripcion, gastos_fijos.cantidad, gastos_fijos.fecha, sucursales.Pseudonimo as nom_sucursal, gastos_fijos.periodicidad, gastos_fijos.status FROM gastos_fijos
+   INNER JOIN tipo_gasto 
+   ON gastos_fijos.tipo_gasto = tipo_gasto.id_tipo
+   INNER JOIN sucursales 
+   ON gastos_fijos.id_sucursal = sucursales.ID_sucursal 
+   WHERE gastos_fijos.status = '1'";
    try{
        $db = new BD();
        $db = $db->conexionBD();
@@ -158,16 +163,12 @@ $app->put('/api/costos_fijos/update/{id}',function (Request $request, Response $
 //Dar de baja
 $app->put('/api/costos_fijos/baja/{id}',function (Request $request, Response $response, array $args) {
   $id = $request->getAttribute('id');
-  $data = $request->getParsedBody();
-  $status = $data["status"];
-  
-  
+
    try {
      $db = new BD();
      $db = $db->conexionBD();
       $sql = "UPDATE gastos_fijos SET status = '2' WHERE id_gasto = '$id' ";
      $resultado = $db->prepare($sql);
-     $resultado->bindParam(':status', $status);
 
      $resultado->execute();
   
@@ -498,7 +499,7 @@ $app->get('/api/producto/menos_vendido/year/{year}', function(Request $request, 
  * =======================================================================
  */
 $app->get('/api/sucursales/consultar', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM sucursal';
+  $consulta = 'SELECT * FROM sucursales';
   try{
       $db = new BD();
       $db = $db->conexionBD();
@@ -716,6 +717,8 @@ $app->get('/api/almacen/movimientos/salidas/range/{inicio}/{fin}', function(Requ
       echo '{"error": {"text":  '.$e->getMessage().'}';
   }
 });
+
+
 
 
 $app->run();
