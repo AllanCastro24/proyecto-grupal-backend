@@ -30,13 +30,13 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
 $app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
-  $id_user = 7;
-  $nombre = "Irán Alondra";
-  $apellidos = "Gardea Palafox";
-  $sueldo = 750;
-  $direccion = "Che rios calle mazatlan #4";
-  $telefono = "6871571062";
-  $genero = "M";
+  $id_user = 8;
+  $nombre = "Herman";
+  $apellidos = "Ayala";
+  $sueldo = 10000;
+  $direccion = "Enrique segoviano";
+  $telefono = "6681121212";
+  $genero = "H";
   $puesto = 0;
   $tipo_pago = 0;
   $tienda = 0;
@@ -121,8 +121,7 @@ $app->post('/api/usuarios/add', function(Request $request, Response $response, a
 
 //Consultar a todos los usuarios y empleados para el admin (falta where id usuario = id_usuario_empleado)
 $app->get('/api/usuarios/consultar_empleado', function(Request $request, Response $response){
-  //$consulta = 'SELECT * FROM usuarios INNER JOIN empleado ON id_usuario = id_empleado';
-  $consulta = 'SELECT * FROM empleado';
+  $consulta = 'SELECT * FROM pruebas.usuarios INNER JOIN empleado ON usuarios.ID_usuario = empleado.ID_empleado';
   try{
     $bd = new BD();
     $bd = $bd->conexionBD();
@@ -146,7 +145,8 @@ $app->get('/api/usuarios/consultar_empleado', function(Request $request, Respons
 });
 
 $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM pruebas.usuarios';
+  //$consulta = 'SELECT * FROM pruebas.usuarios';
+  $consulta = "SELECT * FROM usuarios Where Not exists (select ID_empleado from empleado Where ID_usuario = ID_empleado)";
   try{
     $bd = new BD();
     $bd = $bd->conexionBD();
@@ -212,7 +212,7 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
         ->withStatus(500);
   }
 });
-//Modificar usuario (No funciona)
+//Modificar usuario
 $app->post('/api/usuarios/modificar', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
