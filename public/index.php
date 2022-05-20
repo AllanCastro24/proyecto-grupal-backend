@@ -132,9 +132,11 @@ $app->get('/api/usuarios/consultar_empleado', function(Request $request, Respons
       $user = $resultado->fetchAll(PDO::FETCH_OBJ);
       //echo json_encode($user);
       $response->getBody()->write(json_encode($user));
-      return $response;
+      return $response
+      ->withHeader('content-type','aplication/json')
+      ->withStatus(200);
     }else {
-      echo json_encode("No existen usuarios en la BD.");
+      echo json_encode("No existen empleados en la BD.");
     }
     $resultado = null;
     $db = null;
@@ -144,7 +146,7 @@ $app->get('/api/usuarios/consultar_empleado', function(Request $request, Respons
 });
 
 $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM usuarios';
+  $consulta = 'SELECT * FROM pruebas.usuarios';
   try{
     $bd = new BD();
     $bd = $bd->conexionBD();
@@ -168,13 +170,174 @@ $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Respons
 });
 
 //Loggin
+$app->post('/api/usuarios/login', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $user = "Allan Castro";
+  $pass = "allan13";
+  //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
+  $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass';
+  try {
+    $db = new BD();
+    $db = $db->conexionBD();
+    $resultado = $db->prepare($consulta);
+    $resultado->bindParam(':user', $user);
+    $resultado->bindParam(':pass', $pass);
+    $resultado->execute();
+    
+    $db = null;
+    $usuario = $resultado->fetch(PDO::FETCH_ASSOC);
+    if ($usuario){
+      $response->getBody()->write("Bienvenido");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+    } else{
+      $response->getBody()->write("Usuario o contraseña incorrecto");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+    }
+    
 
-//Modificar usuario
+  } catch (PDOException $e) {
+    echo '{"errorr": {"text":  '.$e->getMessage().'}';
+    $error = array(
+        "message" => $e->getMessage()
+    );
 
+    $response->getBody()->write(json_encode($error));
+    return $response
+        ->withHeader('content-type','aplication/json')
+        ->withStatus(500);
+  }
+});
+//Modificar usuario (No funciona)
+$app->post('/api/usuarios/modificar', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = 5;
+  $usuario = "Allan Castro";
+  $pass = "allan123";
+  $correo = "alan.castro.1226.ac@gmail.com";
+
+  $sql = "UPDATE pruebas.usuarios SET Usuario=:user, pass=:pass, Correo=:mail WHERE ID_usuario=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      $resultado->bindParam(':user', $usuario);
+      $resultado->bindParam(':pass', $pass);
+      $resultado->bindParam(':mail', $correo);
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
 //Modificar contraseña usuario
+$app->post('/api/usuarios/modificar_pass', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = 5;
+  $pass = "alancastro24";
 
+  $sql = "UPDATE pruebas.usuarios SET pass=:pass WHERE ID_usuario=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      $resultado->bindParam(':pass', $pass);
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
 //Modificar empleado / usuario en back
+$app->post('/api/empleado/modificar', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = 5;
+  $nombre = "Allan Enrique";
+  $apellido = "Castro Aguilar";
+  $sueldo = 999999;
+  $direccion = "Pioneros #1992 amp san fernando";
+  $telefono = "6681443027";
+  $genero = "H";
+  $puesto = 0;
+  $pago = 0;
+  $tienda = 0;
 
+  $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo-pago`=:pago, ID_tienda=:tienda WHERE ID_empleado=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      $resultado->bindParam(':nombre', $nombre);
+      $resultado->bindParam(':apellido', $apellido);
+      $resultado->bindParam(':sueldo', $sueldo);
+      $resultado->bindParam(':direccion', $direccion);
+      $resultado->bindParam(':telefono', $telefono);
+      $resultado->bindParam(':genero', $genero);
+      $resultado->bindParam(':puesto', $puesto);
+      $resultado->bindParam(':pago', $pago);
+      $resultado->bindParam(':tienda', $tienda);
+
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
 
 //Activar / Desactivar usuario
 $app->post('/api/usuarios/activar', function(Request $request, Response $response, array $args){
