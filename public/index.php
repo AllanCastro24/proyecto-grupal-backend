@@ -176,7 +176,7 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
   $user = "Allan Castro";
   $pass = "allan13";
   //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
-  $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass';
+  $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass AND Activo="S"';
   try {
     $db = new BD();
     $db = $db->conexionBD();
