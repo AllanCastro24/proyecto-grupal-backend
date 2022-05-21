@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //consultar gastos fijos
 
 $app->get('/api/costos_fijos/consultar', function(Request $request, Response $response){
-    $consulta = "SELECT gastos_fijos.id_gasto, tipo_gasto.nombre, gastos_fijos.descripcion, gastos_fijos.cantidad, gastos_fijos.fecha, sucursales.Pseudonimo as nom_sucursal, gastos_fijos.periodicidad, gastos_fijos.status FROM gastos_fijos
+    $consulta = "SELECT gastos_fijos.id_gasto, tipo_gasto.nombre as tipo_gasto, gastos_fijos.descripcion, gastos_fijos.cantidad, gastos_fijos.fecha, sucursales.Pseudonimo as id_sucursal, gastos_fijos.periodicidad, gastos_fijos.status FROM gastos_fijos
     INNER JOIN tipo_gasto 
     ON gastos_fijos.tipo_gasto = tipo_gasto.id_tipo
     INNER JOIN sucursales 
