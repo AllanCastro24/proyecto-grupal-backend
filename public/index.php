@@ -41,6 +41,32 @@ $app->add(function ($request, $handler) {
   // return $response;
 //});
 
+//======================================== OBTENER Almacen Compuesto ==============================================
+$app->get('/GetAlmacenCompuesto', function (Request $request, Response $response) {
+  $sql = "SELECT almacen.id_almacen, insumos.codigo, insumos.nombre, detalle_insumo.tamano, detalle_insumo.presentacion, detalle_insumo.imagen, 
+  almacen.cantidad, almacen.stock_minimo, unidad_de_medida.unidad FROM almacen INNER JOIN detalle_insumo ON	almacen.id_detalle_insumo = detalle_insumo.id_detalle_insumo INNER JOIN insumos ON	detalle_insumo.id_insumos = insumos.id_insumos INNER JOIN unidad_de_medida
+  ON detalle_insumo.id_unidad_de_medida = unidad_de_medida.id_unidad_de_medida;";
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $db = null;
+    $response->getBody()->write(json_encode($customers));
+    return $response
+    ->withHeader('content-type', 'application/json')
+    ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
+  }
+ });
+
 //===========================================================================================================
 //========================================INICIO PROVEEDOR============================================
 
