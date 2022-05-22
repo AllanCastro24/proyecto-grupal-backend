@@ -3,12 +3,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 $app->get('/api/costos_programados/consultar', function(Request $request, Response $response){
-    $consulta = "SELECT gastos_fijos_programados.id_gasto_fijo, tipo_gasto.nombre as tipo_gasto, gastos_fijos_programados.descripcion, gastos_fijos_programados.cantidad, gastos_fijos_programados.fecha, sucursales.Pseudonimo as id_sucursal, gastos_fijos_programados.periodicidad, gastos_fijos_programados.status FROM gastos_fijos_programados
-    INNER JOIN tipo_gasto 
-    ON gastos_fijos_programados.tipo_gasto = tipo_gasto.id_tipo
-    INNER JOIN sucursales 
-    ON gastos_fijos_programados.id_sucursal = sucursales.ID_sucursal 
-    WHERE gastos_fijos_programados.status = '1'";
+    $consulta = "SELECT gastos_fijos_programados.id_gasto_fijo, tipo_gasto.nombre as nom_tipo, gastos_fijos_programados.descripcion, gastos_fijos_programados.cantidad,
+    gastos_fijos_programados.fecha, sucursales.Pseudonimo as nom_sucursal, gastos_fijos_programados.periodicidad, 
+    gastos_fijos_programados.status, gastos_fijos_programados.tipo_gasto, gastos_fijos_programados.id_sucursal FROM gastos_fijos_programados
+       INNER JOIN tipo_gasto 
+       ON gastos_fijos_programados.tipo_gasto = tipo_gasto.id_tipo
+       INNER JOIN sucursales 
+       ON gastos_fijos_programados.id_sucursal = sucursales.ID_sucursal 
+       WHERE gastos_fijos_programados.status = '1'";
     try{
         $db = new BD();
         $db = $db->conexionBD();
