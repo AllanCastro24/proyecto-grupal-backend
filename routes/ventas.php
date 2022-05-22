@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //Consultar todas los pedidos terminadas
 $app->get('/api/ventas_terminadas/consultar', function(Request $request, Response $response){
     $consulta = "SELECT pedidoscomida.idcli, tiendas.Nombre, sucursales.Pseudonimo, pedidoscomida.idpla,
-    pedidoscomida.name,  pedidoscomida.description, pedidoscomida.price, pedidoscomida.cartCount, categoriasmenu.name as categoria,
+    pedidoscomida.name,  pedidoscomida.description, pedidoscomida.price as value, pedidoscomida.cartCount, categoriasmenu.name as categoria,
     pedidoscomida.estatus FROM pedidoscomida
     INNER JOIN tiendas ON pedidoscomida.idtienda = tiendas.ID_tienda
     INNER JOIN sucursales ON pedidoscomida.idsuc = sucursales.ID_sucursal 
@@ -28,7 +28,7 @@ $app->get('/api/ventas_terminadas/consultar', function(Request $request, Respons
  //Consultar todas los pedidos terminadas
 $app->get('/api/ventas_espera/consultar', function(Request $request, Response $response){
     $consulta = "SELECT pedidoscomida.idcli, tiendas.Nombre, sucursales.Pseudonimo, pedidoscomida.idpla,
-    pedidoscomida.name,  pedidoscomida.description, pedidoscomida.price, pedidoscomida.cartCount, categoriasmenu.name as categoria,
+    pedidoscomida.name,  pedidoscomida.description, pedidoscomida.price as value, pedidoscomida.cartCount, categoriasmenu.name as categoria,
     pedidoscomida.estatus FROM pedidoscomida
     INNER JOIN tiendas ON pedidoscomida.idtienda = tiendas.ID_tienda
     INNER JOIN sucursales ON pedidoscomida.idsuc = sucursales.ID_sucursal 
@@ -54,7 +54,7 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     $mes = $request->getAttribute('mes');
     $year = $request->getAttribute('year');
     $consulta = "SELECT pedidoscomida.idcli, tiendas.Nombre, sucursales.Pseudonimo, pedidoscomida.idpla,
-    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price, pedidoscomida.cartCount, categoriasmenu.name as categoria,
+    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price as value, pedidoscomida.cartCount, categoriasmenu.name as categoria,
     pedidoscomida.estatus FROM pedidoscomida
     INNER JOIN tiendas ON pedidoscomida.idtienda = tiendas.ID_tienda
     INNER JOIN sucursales ON pedidoscomida.idsuc = sucursales.ID_sucursal 
@@ -77,7 +77,7 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
   $app->get('/api/ventas/year/{year}', function(Request $request, Response $response){
     $year = $request->getAttribute('year');
     $consulta = "SELECT pedidoscomida.idcli, tiendas.Nombre, sucursales.Pseudonimo, pedidoscomida.idpla,
-    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price, pedidoscomida.cartCount, categoriasmenu.name as categoria,
+    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price as value, pedidoscomida.cartCount, categoriasmenu.name as categoria,
     pedidoscomida.estatus FROM pedidoscomida
     INNER JOIN tiendas ON pedidoscomida.idtienda = tiendas.ID_tienda
     INNER JOIN sucursales ON pedidoscomida.idsuc = sucursales.ID_sucursal 
@@ -100,7 +100,7 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
   $app->get('/api/ventas/day/{day}', function(Request $request, Response $response){
     $day = $request->getAttribute('day');
     $consulta = "SELECT pedidoscomida.idcli, tiendas.Nombre, sucursales.Pseudonimo, pedidoscomida.idpla,
-    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price, pedidoscomida.cartCount, categoriasmenu.name as categoria,
+    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price as value, pedidoscomida.cartCount, categoriasmenu.name as categoria,
     pedidoscomida.estatus FROM pedidoscomida
     INNER JOIN tiendas ON pedidoscomida.idtienda = tiendas.ID_tienda
     INNER JOIN sucursales ON pedidoscomida.idsuc = sucursales.ID_sucursal 
@@ -124,7 +124,7 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     $inicio = $request->getAttribute('inicio');
     $fin = $request->getAttribute('fin');
     $consulta = "SELECT pedidoscomida.idcli, tiendas.Nombre, sucursales.Pseudonimo, pedidoscomida.idpla,
-    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price, pedidoscomida.cartCount, categoriasmenu.name as categoria,
+    pedidoscomida.name, pedidoscomida.description, pedidoscomida.fecha, pedidoscomida.price as value, pedidoscomida.cartCount, categoriasmenu.name as categoria,
     pedidoscomida.estatus FROM pedidoscomida
     INNER JOIN tiendas ON pedidoscomida.idtienda = tiendas.ID_tienda
     INNER JOIN sucursales ON pedidoscomida.idsuc = sucursales.ID_sucursal 
