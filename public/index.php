@@ -214,14 +214,14 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
   }
 });
 //Modificar usuario
-$app->post('/api/usuarios/modificar', function(Request $request, Response $response, array $args){
+$app->post('/api/usuarios/modificar/{id}', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $id = 5;
-  $usuario = "Allan Castro";
-  $pass = "allan123";
-  $correo = "alan.castro.1226.ac@gmail.com";
-  $imagen = "assets\images\profile\perfil.jpeg";
+  $id = $request->getAttribute('id');;
+  $usuario = $data[''];
+  $pass = $data[''];
+  $correo = $data[''];
+  $imagen = $data[''];
   
   $sql = "UPDATE pruebas.usuarios SET Usuario=:user, pass=:pass, Correo=:mail, image=:imagen WHERE ID_usuario=:id";
   try {
