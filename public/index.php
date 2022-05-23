@@ -28,18 +28,18 @@ $app->get('/', function (Request $request, Response $response, $args) {
  */
 
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
-$app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
+$app->put('/api/empleado/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
-  $id_user = 16;
-  $nombre = "Herman";
-  $apellidos = "Ayala";
-  $sueldo = 10000;
-  $direccion = "Enrique segoviano";
-  $telefono = "6681121212";
-  $genero = "H";
-  $puesto = 0;
-  $tipo_pago = 0;
-  $tienda = 0;
+  $id_user = $data['ID_empleado'];
+  $nombre = $data['Nombre'];
+  $apellidos = $data['Apellidos'];
+  $sueldo = $data['Sueldo'];
+  $direccion = $data['Direccion'];
+  $telefono = $data['Telefono'];
+  $genero = $data['Genero'];
+  $puesto = $data['ID_puesto'];
+  $tipo_pago = $data['ID_tipo_pago'];
+  $tienda = $data['ID_tienda'];
 
   $sql = "INSERT INTO pruebas.empleado VALUES($id_user,:nombre, :apellido, :sueldo, :direccion, :telefono, :genero, :puesto, :tipo_pago, :tienda);";
   try {
