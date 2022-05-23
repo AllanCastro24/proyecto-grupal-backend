@@ -30,7 +30,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
 $app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
-  $id_user = 8;
+  $id_user = 16;
   $nombre = "Herman";
   $apellidos = "Ayala";
   $sueldo = 10000;
@@ -86,8 +86,9 @@ $app->post('/api/usuarios/add', function(Request $request, Response $response, a
   $mail = "pruebas@gmail.com";//$data["mail"];//"profeherman@gmail.com";
   $pass = "pruebas";//$data["pass"];//"profe123";
   $fecha = date('Y-m-d');
-
-  $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S',:fecha,:fecha,:mail)";
+  $imagen = "assets\images\profile\adam.jpg";
+  //INSERT INTO pruebas.usuarios (Usuario, pass, Activo, Fecha_registro, Ultimo_ingreso, Correo, image) VALUES('', '', '', '', '', '', '');
+  $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S',:fecha,:fecha,:mail,:imagen)";
   try {
       $db = new BD();
       $db = $db->conexionBD();
@@ -96,6 +97,7 @@ $app->post('/api/usuarios/add', function(Request $request, Response $response, a
       $resultado->bindParam(':mail', $mail);
       $resultado->bindParam(':pass', $pass);
       $resultado->bindParam(':fecha', $fecha);
+      $resultado->bindParam(':imagen', $imagen);
       
       $resultado->execute();
       
@@ -174,7 +176,7 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
   $data = $request->getParsedBody();
   
   $user = "Allan Castro";
-  $pass = "allan13";
+  $pass = "allan123";
   //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
   $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass AND Activo="S"';
   try {
@@ -220,8 +222,9 @@ $app->post('/api/usuarios/modificar', function(Request $request, Response $respo
   $usuario = "Allan Castro";
   $pass = "allan123";
   $correo = "alan.castro.1226.ac@gmail.com";
-
-  $sql = "UPDATE pruebas.usuarios SET Usuario=:user, pass=:pass, Correo=:mail WHERE ID_usuario=:id";
+  $imagen = "assets\images\profile\perfil.jpeg";
+  
+  $sql = "UPDATE pruebas.usuarios SET Usuario=:user, pass=:pass, Correo=:mail, image=:imagen WHERE ID_usuario=:id";
   try {
       $db = new BD();
       $db = $db->conexionBD();
@@ -230,6 +233,7 @@ $app->post('/api/usuarios/modificar', function(Request $request, Response $respo
       $resultado->bindParam(':user', $usuario);
       $resultado->bindParam(':pass', $pass);
       $resultado->bindParam(':mail', $correo);
+      $resultado->bindParam(':imagen', $imagen);
       $resultado->execute();
       
       $db = null;
@@ -287,21 +291,21 @@ $app->post('/api/usuarios/modificar_pass', function(Request $request, Response $
   }
 });
 //Modificar empleado / usuario en back
-$app->post('/api/empleado/modificar', function(Request $request, Response $response, array $args){
+$app->put('/api/empleado/modificar/{id}', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $id = 5;
-  $nombre = "Allan Enrique";
-  $apellido = "Castro Aguilar";
-  $sueldo = 999999;
+  $id = $request->getAttribute('id');
+  $nombre = "Allan";
+  $apellido = "Castro";
+  $genero = "H";
+  $tienda = 0;
+  $puesto = 0;
+  $sueldo = 9;
   $direccion = "Pioneros #1992 amp san fernando";
   $telefono = "6681443027";
-  $genero = "H";
-  $puesto = 0;
   $pago = 0;
-  $tienda = 0;
 
-  $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo-pago`=:pago, ID_tienda=:tienda WHERE ID_empleado=:id";
+  $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo_pago`=:pago, ID_tienda=:tienda WHERE ID_empleado=:id";
   try {
       $db = new BD();
       $db = $db->conexionBD();
