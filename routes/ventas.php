@@ -143,8 +143,11 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     }
   });
   
-  
   /*
+    PRODUCTOS O PLATILLOS MÁS VENDIDOS
+  */
+ 
+  
   //CONSULTA MAS VENDIDO POR MES
   $app->get('/api/producto/mas_vendido/mes/{mes}/{year}', function(Request $request, Response $response){
     $mes = $request->getAttribute('mes');
@@ -215,7 +218,7 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
         echo '{"error": {"text":  '.$e->getMessage().'}';
     }
   });
-  */
+  
    
   
   

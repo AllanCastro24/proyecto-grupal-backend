@@ -10,8 +10,7 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
         INNER JOIN tipo_gasto 
         ON gastos_fijos.tipo_gasto = tipo_gasto.id_tipo
         INNER JOIN sucursales 
-        ON gastos_fijos.id_sucursal = sucursales.ID_sucursal 
-        WHERE gastos_fijos.status = '1'";
+        ON gastos_fijos.id_sucursal = sucursales.ID_sucursal ";
     try{
         $db = new BD();
         $db = $db->conexionBD();
@@ -133,13 +132,19 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
  
  
  //Dar de baja
- $app->put('/api/costos_fijos/baja/{id}',function (Request $request, Response $response, array $args) {
+ $app->put('/api/costos_fijos/baja/{id}/{status}',function (Request $request, Response $response, array $args) {
    $id = $request->getAttribute('id');
- 
+   $status = $request->getAttribute('status');
+  
+   if($status = '1'){
+    $sql = "UPDATE gastos_fijos SET gastos_fijos.status = '2' WHERE id_gasto = '$id' ";
+   }else if($status = '2'){
+    $sql = "UPDATE gastos_fijos SET status = '1' WHERE id_gasto = '$id' ";
+   }
+
     try {
       $db = new BD();
       $db = $db->conexionBD();
-       $sql = "UPDATE gastos_fijos SET status = '2' WHERE id_gasto = '$id' ";
       $resultado = $db->prepare($sql);
  
       $resultado->execute();

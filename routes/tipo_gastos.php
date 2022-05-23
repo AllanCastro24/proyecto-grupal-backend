@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //consultar TIPO DE GASTOS
 
 $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $response){
-    $consulta = 'SELECT * FROM tipo_gasto';
+    $consulta = "SELECT * FROM tipo_gasto where tipo_gasto.status = '1'";
     try{
         $db = new BD();
         $db = $db->conexionBD();

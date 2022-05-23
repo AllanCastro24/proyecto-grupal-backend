@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //CONSULTAR SUCURSALES
 
 $app->get('/api/sucursales/consultar', function(Request $request, Response $response){
-    $consulta = 'SELECT * FROM sucursales';
+    $consulta = "SELECT * FROM sucursales where sucursales.status = '1'";
     try{
         $db = new BD();
         $db = $db->conexionBD();
