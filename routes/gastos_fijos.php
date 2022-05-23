@@ -6,11 +6,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 $app->get('/api/costos_fijos/consultar', function(Request $request, Response $response){
     $consulta = "SELECT gastos_fijos.id_gasto, tipo_gasto.nombre as nom_tipo, gastos_fijos.descripcion, gastos_fijos.cantidad, gastos_fijos.fecha, sucursales.Pseudonimo as nom_sucursal, 
-    gastos_fijos.periodicidad, gastos_fijos.status, gastos_fijos.tipo_gasto,gastos_fijos.id_sucursal FROM gastos_fijos
+    gastos_fijos.periodicidad, gastos_fijos.status, status.nom_status, gastos_fijos.tipo_gasto,gastos_fijos.id_sucursal FROM gastos_fijos
         INNER JOIN tipo_gasto 
         ON gastos_fijos.tipo_gasto = tipo_gasto.id_tipo
         INNER JOIN sucursales 
-        ON gastos_fijos.id_sucursal = sucursales.ID_sucursal ";
+        ON gastos_fijos.id_sucursal = sucursales.ID_sucursal
+        INNER JOIN status
+       ON gastos_fijos.status = status.idstatus ";
     try{
         $db = new BD();
         $db = $db->conexionBD();

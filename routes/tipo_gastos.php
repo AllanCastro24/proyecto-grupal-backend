@@ -5,7 +5,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //consultar TIPO DE GASTOS
 
 $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $response){
-    $consulta = "SELECT * FROM tipo_gasto ";
+    $consulta = "SELECT id_tipo, nombre, status, status.nom_status FROM tipo_gasto 
+    INNER JOIN status
+    ON tipo_gasto.status = status.idstatus";
     try{
         $db = new BD();
         $db = $db->conexionBD();
