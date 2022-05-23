@@ -40,8 +40,9 @@ $app->post('/api/empleado/add', function(Request $request, Response $response, a
   $puesto = $data['ID_puesto'];
   $tipo_pago = $data['ID_tipo_pago'];
   $tienda = $data['ID_tienda'];
+  $sucursal = $data['ID_sucursal'];
 
-  $sql = "INSERT INTO pruebas.empleado VALUES($id_user,:nombre, :apellido, :sueldo, :direccion, :telefono, :genero, :puesto, :tipo_pago, :tienda);";
+  $sql = "INSERT INTO pruebas.empleado VALUES($id_user,:nombre, :apellido, :sueldo, :direccion, :telefono, :genero, :puesto, :tipo_pago, :tienda,:sucursal);";
   try {
       $db = new BD();
       $db = $db->conexionBD();
@@ -55,6 +56,7 @@ $app->post('/api/empleado/add', function(Request $request, Response $response, a
       $resultado->bindParam(':puesto', $puesto);
       $resultado->bindParam(':tipo_pago', $tipo_pago);
       $resultado->bindParam(':tienda', $tienda);
+      $resultado->bindParam(':sucursal', $sucursal);
       
       $resultado->execute();
       
@@ -301,8 +303,9 @@ $app->put('/api/empleado/modificar/{id}', function(Request $request, Response $r
   $direccion = $data['Direccion'];
   $telefono = $data['Telefono'];
   $pago = $data['ID_tipo_pago'];
+  $sucursal = $data['ID_sucursal'];
 
-  $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo_pago`=:pago, ID_tienda=:tienda WHERE ID_empleado=:id";
+  $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo_pago`=:pago, ID_tienda=:tienda, ID_sucursal=:sucursal WHERE ID_empleado=:id";
   try {
       $db = new BD();
       $db = $db->conexionBD();
@@ -317,6 +320,7 @@ $app->put('/api/empleado/modificar/{id}', function(Request $request, Response $r
       $resultado->bindParam(':puesto', $puesto);
       $resultado->bindParam(':pago', $pago);
       $resultado->bindParam(':tienda', $tienda);
+      $resultado->bindParam(':sucursal', $sucursal);
 
       $resultado->execute();
       
