@@ -131,13 +131,19 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
  });
 
   //Dar de baja
-  $app->put('/api/costos_programados/baja/{id}',function (Request $request, Response $response, array $args) {
+  $app->put('/api/costos_programados/baja/{id}/{status}',function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-  
+    $status = $request->getAttribute('status');
+    if($status == '1'){
+      $sql = "UPDATE gastos_fijos_programados SET status = '2' WHERE id_gasto_fijo = '$id' ";
+    }else if ($status == '2'){
+      $sql = "UPDATE gastos_fijos_programados SET status = '1' WHERE id_gasto_fijo = '$id' ";
+
+    }
+
      try {
        $db = new BD();
        $db = $db->conexionBD();
-        $sql = "UPDATE gastos_fijos_programados SET status = '2' WHERE id_gasto_fijo = '$id' ";
        $resultado = $db->prepare($sql);
   
        $resultado->execute();

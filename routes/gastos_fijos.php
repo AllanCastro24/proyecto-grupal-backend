@@ -136,14 +136,12 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
    $id = $request->getAttribute('id');
    $status = $request->getAttribute('status');
   
-   if($status = '1'){
+   if($status == '1'){
     $sql = "UPDATE gastos_fijos SET gastos_fijos.status = '2' WHERE id_gasto = '$id' ";
-   }else if($status = '2'){
+   }else if($status == '2'){
     $sql = "UPDATE gastos_fijos SET status = '1' WHERE id_gasto = '$id' ";
    }
 
-   echo $status;
-   echo $sql;
 
     try {
       $db = new BD();

@@ -100,13 +100,18 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
  });
 
  //Dar de baja TIPO GASTO
-$app->put('/api/tipo_gastos/baja/{id}',function (Request $request, Response $response, array $args) {
+$app->put('/api/tipo_gastos/baja/{id}/{status}',function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-   
+    $status = $request->getAttribute('id');
+    if($status == '1'){
+      $sql = "UPDATE tipo_gasto SET status = '2' WHERE id_tipo = '$id' ";
+    }else if ($status == '2'){
+      $sql = "UPDATE tipo_gasto SET status = '1' WHERE id_tipo = '$id' ";
+
+    }
     try {
       $db = new BD();
       $db = $db->conexionBD();
-      $sql = "UPDATE tipo_gasto SET status = '2' WHERE id_tipo = '$id' ";
 
       $resultado = $db->prepare($sql);
       $resultado->bindParam(':status', $status);
