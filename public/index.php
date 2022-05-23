@@ -28,7 +28,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
  */
 
 //Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
-$app->put('/api/empleado/add', function(Request $request, Response $response, array $args){
+$app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   $id_user = $data['ID_empleado'];
   $nombre = $data['Nombre'];
@@ -82,12 +82,11 @@ $app->put('/api/empleado/add', function(Request $request, Response $response, ar
 $app->post('/api/usuarios/add', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $usuario = "Pruebas";//$data["user"];//"Profe herman";
-  $mail = "pruebas@gmail.com";//$data["mail"];//"profeherman@gmail.com";
-  $pass = "pruebas";//$data["pass"];//"profe123";
+  $usuario = $data['username'];//$data["user"];//"Profe herman";
+  $mail = $data['email'];//$data["mail"];//"profeherman@gmail.com";
+  $pass = $data['password'];//$data["pass"];//"profe123";
   $fecha = date('Y-m-d');
-  $imagen = "assets\images\profile\adam.jpg";
-  //INSERT INTO pruebas.usuarios (Usuario, pass, Activo, Fecha_registro, Ultimo_ingreso, Correo, image) VALUES('', '', '', '', '', '', '');
+  $imagen = "";
   $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S',:fecha,:fecha,:mail,:imagen)";
   try {
       $db = new BD();
@@ -175,8 +174,8 @@ $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Respons
 $app->post('/api/usuarios/login', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $user = "Allan Castro";
-  $pass = "allan123";
+  $user = $data['username'];
+  $pass = $data['password'];
   //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
   $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass AND Activo="S"';
   try {
