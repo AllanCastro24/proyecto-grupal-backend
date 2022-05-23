@@ -295,15 +295,15 @@ $app->put('/api/empleado/modificar/{id}', function(Request $request, Response $r
   $data = $request->getParsedBody();
   
   $id = $request->getAttribute('id');
-  $nombre = "Allan";
-  $apellido = "Castro";
-  $genero = "H";
-  $tienda = 0;
-  $puesto = 0;
-  $sueldo = 9;
-  $direccion = "Pioneros #1992 amp san fernando";
-  $telefono = "6681443027";
-  $pago = 0;
+  $nombre = $data['Nombre'];
+  $apellido = $data['Apellidos'];
+  $genero = $data['Genero'];
+  $tienda = $data['ID_tienda'];
+  $puesto = $data['ID_puesto'];
+  $sueldo = $data['Sueldo'];
+  $direccion = $data['Direccion'];
+  $telefono = $data['Telefono'];
+  $pago = $data['ID_tipo_pago'];
 
   $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo_pago`=:pago, ID_tienda=:tienda WHERE ID_empleado=:id";
   try {
