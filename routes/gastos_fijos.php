@@ -142,6 +142,9 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
     $sql = "UPDATE gastos_fijos SET status = '1' WHERE id_gasto = '$id' ";
    }
 
+   echo $status;
+   echo $sql;
+
     try {
       $db = new BD();
       $db = $db->conexionBD();
