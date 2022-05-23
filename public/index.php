@@ -214,23 +214,21 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
   }
 });
 //Modificar usuario
-$app->post('/api/usuarios/modificar/{id}', function(Request $request, Response $response, array $args){
+$app->put('/api/usuarios/modificar/{id}', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $id = $request->getAttribute('id');;
-  $usuario = $data[''];
-  $pass = $data[''];
-  $correo = $data[''];
-  $imagen = $data[''];
+  $id = $request->getAttribute('id');
+  $usuario = $data['name'];
+  $correo = $data['email'];
+  $imagen = $data['image'];
   
-  $sql = "UPDATE pruebas.usuarios SET Usuario=:user, pass=:pass, Correo=:mail, image=:imagen WHERE ID_usuario=:id";
+  $sql = "UPDATE pruebas.usuarios SET Usuario=:user, Correo=:mail, image=:imagen WHERE ID_usuario=:id";
   try {
       $db = new BD();
       $db = $db->conexionBD();
       $resultado = $db->prepare($sql);
       $resultado->bindParam(':id', $id);
       $resultado->bindParam(':user', $usuario);
-      $resultado->bindParam(':pass', $pass);
       $resultado->bindParam(':mail', $correo);
       $resultado->bindParam(':imagen', $imagen);
       $resultado->execute();
@@ -255,11 +253,11 @@ $app->post('/api/usuarios/modificar/{id}', function(Request $request, Response $
   }
 });
 //Modificar contraseña usuario
-$app->post('/api/usuarios/modificar_pass', function(Request $request, Response $response, array $args){
+$app->put('/api/usuarios/modificar_pass/{id}', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $id = 5;
-  $pass = "alancastro24";
+  $id = $request->getAttribute('id');;
+  $pass = $data['newPassword'];
 
   $sql = "UPDATE pruebas.usuarios SET pass=:pass WHERE ID_usuario=:id";
   try {
