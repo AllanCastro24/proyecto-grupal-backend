@@ -152,7 +152,11 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
   $app->get('/api/producto/mas_vendido/mes/{mes}/{year}', function(Request $request, Response $response){
     $mes = $request->getAttribute('mes');
     $year = $request->getAttribute('year');
-    $consulta = "SELECT name, value FROM mas_vendido2 WHERE MONTH(fecha) = '$mes' and year(fecha) = '$year' ";
+    $consulta = "SELECT pedidoscomida.name, SUM(pedidoscomida.price) AS TotalVentas
+    FROM pedidoscomida  where  month(pedidoscomida.fecha) = '$mes' and year(pedidoscomida.fecha) = '$year' and estatus = 'Terminado' 
+    GROUP BY pedidoscomida.idpla
+    ORDER BY SUM(pedidoscomida.price) DESC
+    LIMIT 0 , 30 ";
     try{
         $db = new BD();
         $db = $db->conexionBD();
@@ -169,7 +173,34 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
   //CONSULTA MAS VENDIDO POR AÑO
   $app->get('/api/producto/mas_vendido/year/{year}', function(Request $request, Response $response){
     $year = $request->getAttribute('year');
-    $consulta = "SELECT name, value FROM mas_vendido2 WHERE year(fecha) = '$year' ";
+    $consulta = "SELECT pedidoscomida.name, SUM(pedidoscomida.price) AS TotalVentas
+    FROM pedidoscomida  where  year(pedidoscomida.fecha) = '$year' and estatus = 'Terminado' 
+    GROUP BY pedidoscomida.idpla
+    ORDER BY SUM(pedidoscomida.price) DESC
+    LIMIT 0 , 30 ";
+    try{
+        $db = new BD();
+        $db = $db->conexionBD();
+        $ejecutar = $db->query($consulta);
+        $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        $response->getBody()->write(json_encode($gastos));
+        return $response;// $gastos;
+    } catch(PDOException $e){
+        echo '{"error": {"text":  '.$e->getMessage().'}';
+    }
+  });
+  
+  //MAS VENDIDO POR RANGO
+
+  $app->get('/api/producto/mas_vendido/range/{inicio}/{fin}', function(Request $request, Response $response){
+    $inicio = $request->getAttribute('inicio');
+    $fin = $request->getAttribute('fin');
+    $consulta = "SELECT pedidoscomida.name, SUM(pedidoscomida.price) AS TotalVentas
+    FROM pedidoscomida  where  date(pedidoscomida.fecha) BETWEEN '$inicio' AND '$fin' and estatus = 'Terminado' 
+    GROUP BY pedidoscomida.idpla
+    ORDER BY SUM(pedidoscomida.price) DESC
+    LIMIT 0 , 30 ";
     try{
         $db = new BD();
         $db = $db->conexionBD();
@@ -184,40 +215,7 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
   });
   
   
-  //CONSULTA MENOS VENDIDO POR MES
-  $app->get('/api/producto/menos_vendido/mes/{mes}/{year}', function(Request $request, Response $response){
-    $mes = $request->getAttribute('mes');
-    $year = $request->getAttribute('year');
-    $consulta = "SELECT name, value FROM menos_vendido2 WHERE MONTH(fecha) = '$mes' and year(fecha) = '$year' ";
-    try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
-        $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response->getBody()->write(json_encode($gastos));
-        return $response;// $gastos;
-    } catch(PDOException $e){
-        echo '{"error": {"text":  '.$e->getMessage().'}';
-    }
-  });
-  
-  //CONSULTA MENOS VENDIDO POR AÑO
-  $app->get('/api/producto/menos_vendido/year/{year}', function(Request $request, Response $response){
-    $year = $request->getAttribute('year');
-    $consulta = "SELECT name, value FROM menos_vendido2 WHERE year(fecha) = '$year' ";
-    try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
-        $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response->getBody()->write(json_encode($gastos));
-        return $response;// $gastos;
-    } catch(PDOException $e){
-        echo '{"error": {"text":  '.$e->getMessage().'}';
-    }
-  });
+
   
    
   

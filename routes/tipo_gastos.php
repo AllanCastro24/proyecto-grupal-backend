@@ -18,6 +18,22 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
         echo '{"error": {"text":  '.$e->getMessage().'}';
     }
  });
+// consulta select
+ $app->get('/api/tipo_gastos/select', function(Request $request, Response $response){
+  $consulta = "SELECT * FROM tipo_gasto where tipo_gasto.status ='1'";
+  try{
+      $db = new BD();
+      $db = $db->conexionBD();
+      $ejecutar = $db->query($consulta);
+      $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+      $db = null;
+      $response->getBody()->write(json_encode($gastos));
+      return $response;// $gastos;
+  } catch(PDOException $e){
+      echo '{"error": {"text":  '.$e->getMessage().'}';
+  }
+});
+
  
  //Añadir TIPO GASTO
  $app->post('/api/tipo_gastos/add', function(Request $request, Response $response, array $args){
@@ -102,7 +118,7 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
  //Dar de baja TIPO GASTO
 $app->put('/api/tipo_gastos/baja/{id}/{status}',function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
-    $status = $request->getAttribute('id');
+    $status = $request->getAttribute('status');
     if($status == '1'){
       $sql = "UPDATE tipo_gasto SET status = '2' WHERE id_tipo = '$id' ";
     }else if ($status == '2'){
@@ -114,13 +130,12 @@ $app->put('/api/tipo_gastos/baja/{id}/{status}',function (Request $request, Resp
       $db = $db->conexionBD();
 
       $resultado = $db->prepare($sql);
-      $resultado->bindParam(':status', $status);
  
       $resultado->execute();
    
       $db = null;
       
-      echo "Update successful! ";
+    
       $response->getBody()->write(json_encode($resultado));
       return $response
         ->withHeader('content-type', 'application/json')
