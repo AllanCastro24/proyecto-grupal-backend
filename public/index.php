@@ -340,10 +340,10 @@ $app->post('/api/empleado/modificar', function(Request $request, Response $respo
 });
 
 //Activar / Desactivar usuario
-$app->post('/api/usuarios/activar', function(Request $request, Response $response, array $args){
+$app->put('/api/usuarios/activar/{id}', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $id = 5;
+  $id = $request->getAttribute('id');
 
   $sql = "UPDATE pruebas.usuarios SET Activo='S' WHERE ID_usuario=:id";
   try {
@@ -374,10 +374,10 @@ $app->post('/api/usuarios/activar', function(Request $request, Response $respons
   }
 });
 
-$app->post('/api/usuarios/desactivar', function(Request $request, Response $response, array $args){
+$app->put('/api/usuarios/desactivar/{id}', function(Request $request, Response $response, array $args){
   $data = $request->getParsedBody();
   
-  $id = 5;
+  $id = $request->getAttribute('id');
 
   $sql = "UPDATE pruebas.usuarios SET Activo='N' WHERE ID_usuario=:id";
   try {
