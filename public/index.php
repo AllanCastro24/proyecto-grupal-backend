@@ -1,5 +1,6 @@
 <?php
 
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET, POST, HEAD, PUT");
@@ -65,6 +66,396 @@ require __DIR__ . '/../routes/ventas.php';
 require __DIR__ . '/../routes/sucursales.php';
 require __DIR__ . '/../routes/almacen.php';
 require __DIR__ . '/../routes/gastos_fijos_programados.php';
+
+/**
+ * USUARIOS
+ */
+
+//Insertar empleado (Si da de alta empleado, agregarle el mismo numero de usuario que tiene)
+$app->post('/api/empleado/add', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  $id_user = $data['ID_empleado'];
+  $nombre = $data['Nombre'];
+  $apellidos = $data['Apellidos'];
+  $sueldo = $data['Sueldo'];
+  $direccion = $data['Direccion'];
+  $telefono = $data['Telefono'];
+  $genero = $data['Genero'];
+  $puesto = $data['ID_puesto'];
+  $tipo_pago = $data['ID_tipo_pago'];
+  $tienda = $data['ID_tienda'];
+  $sucursal = $data['ID_sucursal'];
+
+  $sql = "INSERT INTO pruebas.empleado VALUES($id_user,:nombre, :apellido, :sueldo, :direccion, :telefono, :genero, :puesto, :tipo_pago, :tienda,:sucursal);";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':nombre', $nombre);
+      $resultado->bindParam(':apellido', $apellidos);
+      $resultado->bindParam(':sueldo', $sueldo);
+      $resultado->bindParam(':direccion', $direccion);
+      $resultado->bindParam(':telefono', $telefono);
+      $resultado->bindParam(':genero', $genero);
+      $resultado->bindParam(':puesto', $puesto);
+      $resultado->bindParam(':tipo_pago', $tipo_pago);
+      $resultado->bindParam(':tienda', $tienda);
+      $resultado->bindParam(':sucursal', $sucursal);
+      
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se contrató con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
+
+//Insertar nombre de usuario, contraseña y correo (Todos se pueden registrar, pero no todos serán empleados)
+$app->post('/api/usuarios/add', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $usuario = $data['username'];//$data["user"];//"Profe herman";
+  $mail = $data['email'];//$data["mail"];//"profeherman@gmail.com";
+  $pass = $data['password'];//$data["pass"];//"profe123";
+  $fecha = date('Y-m-d');
+  $imagen = "";
+  $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S',:fecha,:fecha,:mail,:imagen)";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':usuario', $usuario);
+      $resultado->bindParam(':mail', $mail);
+      $resultado->bindParam(':pass', $pass);
+      $resultado->bindParam(':fecha', $fecha);
+      $resultado->bindParam(':imagen', $imagen);
+      
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se registró con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
+
+//Consultar a todos los usuarios y empleados para el admin (falta where id usuario = id_usuario_empleado)
+$app->get('/api/usuarios/consultar_empleado', function(Request $request, Response $response){
+  $consulta = 'SELECT * FROM pruebas.usuarios INNER JOIN empleado ON usuarios.ID_usuario = empleado.ID_empleado';
+  try{
+    $bd = new BD();
+    $bd = $bd->conexionBD();
+    $resultado = $bd->query($consulta);
+
+    if ($resultado->rowCount() > 0){
+      $user = $resultado->fetchAll(PDO::FETCH_OBJ);
+      //echo json_encode($user);
+      $response->getBody()->write(json_encode($user));
+      return $response
+      ->withHeader('content-type','aplication/json')
+      ->withStatus(200);
+    }else {
+      echo json_encode("No existen empleados en la BD.");
+    }
+    $resultado = null;
+    $db = null;
+  }catch(PDOException $e){
+    echo '{"error" : {"text":'.$e->getMessage().'}';
+  }
+});
+
+$app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
+  //$consulta = 'SELECT * FROM pruebas.usuarios';
+  $consulta = "SELECT * FROM usuarios Where Not exists (select ID_empleado from empleado Where ID_usuario = ID_empleado)";
+  try{
+    $bd = new BD();
+    $bd = $bd->conexionBD();
+    $resultado = $bd->query($consulta);
+
+    if ($resultado->rowCount() > 0){
+      $user = $resultado->fetchAll(PDO::FETCH_OBJ);
+      //echo json_encode($user);
+      $response->getBody()->write(json_encode($user));
+      return $response
+      ->withHeader('content-type','aplication/json')
+      ->withStatus(200);
+    }else {
+      echo json_encode("No existen usuarios en la BD.");
+    }
+    $resultado = null;
+    $db = null;
+  }catch(PDOException $e){
+    echo '{"error" : {"text":'.$e->getMessage().'}';
+  }
+});
+
+//Loggin
+$app->post('/api/usuarios/login', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $user = $data['username'];
+  $pass = $data['password'];
+  //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
+  $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass AND Activo="S"';
+  try {
+    $db = new BD();
+    $db = $db->conexionBD();
+    $resultado = $db->prepare($consulta);
+    $resultado->bindParam(':user', $user);
+    $resultado->bindParam(':pass', $pass);
+    $resultado->execute();
+    
+    $db = null;
+    $usuario = $resultado->fetch(PDO::FETCH_ASSOC);
+    if ($usuario){
+      $response->getBody()->write("Bienvenido");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+    } else{
+      $response->getBody()->write("Usuario o contraseña incorrecto");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+    }
+    
+
+  } catch (PDOException $e) {
+    echo '{"errorr": {"text":  '.$e->getMessage().'}';
+    $error = array(
+        "message" => $e->getMessage()
+    );
+
+    $response->getBody()->write(json_encode($error));
+    return $response
+        ->withHeader('content-type','aplication/json')
+        ->withStatus(500);
+  }
+});
+//Modificar usuario
+$app->put('/api/usuarios/modificar/{id}', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = $request->getAttribute('id');
+  $usuario = $data['name'];
+  $correo = $data['email'];
+  $imagen = $data['image'];
+  
+  $sql = "UPDATE pruebas.usuarios SET Usuario=:user, Correo=:mail, image=:imagen WHERE ID_usuario=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      $resultado->bindParam(':user', $usuario);
+      $resultado->bindParam(':mail', $correo);
+      $resultado->bindParam(':imagen', $imagen);
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
+//Modificar contraseña usuario
+$app->put('/api/usuarios/modificar_pass/{id}', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = $request->getAttribute('id');;
+  $pass = $data['newPassword'];
+
+  $sql = "UPDATE pruebas.usuarios SET pass=:pass WHERE ID_usuario=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      $resultado->bindParam(':pass', $pass);
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
+//Modificar empleado / usuario en back
+$app->put('/api/empleado/modificar/{id}', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = $request->getAttribute('id');
+  $nombre = $data['Nombre'];
+  $apellido = $data['Apellidos'];
+  $genero = $data['Genero'];
+  $tienda = $data['ID_tienda'];
+  $puesto = $data['ID_puesto'];
+  $sueldo = $data['Sueldo'];
+  $direccion = $data['Direccion'];
+  $telefono = $data['Telefono'];
+  $pago = $data['ID_tipo_pago'];
+  $sucursal = $data['ID_sucursal'];
+
+  $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo_pago`=:pago, ID_tienda=:tienda, ID_sucursal=:sucursal WHERE ID_empleado=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      $resultado->bindParam(':nombre', $nombre);
+      $resultado->bindParam(':apellido', $apellido);
+      $resultado->bindParam(':sueldo', $sueldo);
+      $resultado->bindParam(':direccion', $direccion);
+      $resultado->bindParam(':telefono', $telefono);
+      $resultado->bindParam(':genero', $genero);
+      $resultado->bindParam(':puesto', $puesto);
+      $resultado->bindParam(':pago', $pago);
+      $resultado->bindParam(':tienda', $tienda);
+      $resultado->bindParam(':sucursal', $sucursal);
+
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
+
+//Activar / Desactivar usuario
+$app->put('/api/usuarios/activar/{id}', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = $request->getAttribute('id');
+
+  $sql = "UPDATE pruebas.usuarios SET Activo='S' WHERE ID_usuario=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
+
+$app->put('/api/usuarios/desactivar/{id}', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = $request->getAttribute('id');
+
+  $sql = "UPDATE pruebas.usuarios SET Activo='N' WHERE ID_usuario=:id";
+  try {
+      $db = new BD();
+      $db = $db->conexionBD();
+      $resultado = $db->prepare($sql);
+      $resultado->bindParam(':id', $id);
+      
+      $resultado->execute();
+      
+      $db = null;
+
+      $response->getBody()->write("Se modificó con exito");
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+
+  } catch (PDOException $e) {
+      echo '{"errorr": {"text":  '.$e->getMessage().'}';
+      $error = array(
+          "message" => $e->getMessage()
+      );
+
+      $response->getBody()->write(json_encode($error));
+      return $response
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(500);
+  }
+});
 
 //======================================== OBTENER Almacen Compuesto ==============================================
 $app->get('/GetAlmacenCompuesto', function (Request $request, Response $response) {
@@ -209,7 +600,10 @@ $app->get('/GetInsumoCompuesto', function (Request $request, Response $response)
        ->withHeader('content-type', 'application/json')
        ->withStatus(500);
    }
-  });
+});
+
+
+
 //======================================== OBTENER mermas Compuesta ==============================================
 $app->get('/GetMermaCom', function (Request $request, Response $response) {
   /*  $sql = "SELECT id_insumos FROM insumos ORDER BY id_insumos DESC LIMIT 1;"; */
@@ -238,6 +632,7 @@ $app->get('/GetMermaCom', function (Request $request, Response $response) {
        ->withHeader('content-type', 'application/json')
        ->withStatus(500);
    }
+
   });
 //========================================OBTENER ULTIMO ID DE INSUMOS==============================================
 $app->get('/GetLastInsumo', function (Request $request, Response $response) {

@@ -55,6 +55,7 @@ class ComposerAutoloaderInit5e9e0630d8dc7f2207d2d94c2f469b79
         $loader->register(true);
 
         if ($useStaticLoader) {
+
             $includeFiles = Composer\Autoload\ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79::$files;
         } else {
             $includeFiles = require __DIR__ . '/autoload_files.php';
