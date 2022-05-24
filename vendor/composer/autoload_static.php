@@ -4,30 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
+class ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79
 {
     public static $files = array (
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-        '07d7f1a47144818725fd8d91a907ac57' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.php',
-        'da94ac5d3ca7d2dbab84ce561ce72bfd' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.php',
-        '3d97c8dcdfba8cb85d3b34f116bb248b' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.php',
-        'e6f3bc6883e449ab367280b34158c05b' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_protocol_version_from_sapi.php',
-        'd59fbae42019aedf227094ac49a46f50' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_uri_from_sapi.php',
-        'de95e0ac670b27c84ef8c5ac41fc1b34' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.php',
-        'b6c2870932b0250c10334a86dcb33c7f' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.php',
-        'd02cf21124526632320d6f20b1bbf905' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.php',
-        'd919fc9d5ad52cfb7f322f7fe36458ab' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/create_uploaded_file.legacy.php',
-        'e397f74f8af3b1e56166a6e99f216ee7' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_headers_from_sapi.legacy.php',
-        'd154b49fab8e4da34fb553a2d644918c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_method_from_sapi.legacy.php',
-        '9d3db23ca418094bcf0b641a0c9559ed' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_protocol_version_from_sapi.legacy.php',
-        'b0b88a3b89caae681462c58ff19a7059' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/marshal_uri_from_sapi.legacy.php',
-        'cc8e14526dc240491e17a838cb78508c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_server.legacy.php',
-        '786bf90caabc9e09b6ad4cc5ca8f0e30' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/normalize_uploaded_files.legacy.php',
-        '751a5a3f463e4be759be31748b61737c' => __DIR__ . '/..' . '/laminas/laminas-diactoros/src/functions/parse_cookie_header.legacy.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
-        '829f62e0f735a7ef52311a059968b578' => __DIR__ . '/..' . '/sapphirecat/slim4-http-interop-adapter/setup.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -37,7 +19,6 @@ class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
             'Slim\\Psr7\\' => 10,
             'Slim\\' => 5,
             'Selective\\BasePath\\' => 19,
-            'Sapphirecat\\Slim4HttpInteropAdapter\\' => 36,
         ),
         'P' => 
         array (
@@ -46,28 +27,14 @@ class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
         ),
-        'N' => 
-        array (
-            'Nyholm\\Psr7\\' => 12,
-            'Nyholm\\Psr7Server\\' => 18,
-        ),
-        'L' => 
-        array (
-            'Laminas\\Diactoros\\' => 18,
-        ),
-        'H' => 
-        array (
-            'Http\\Message\\' => 13,
-            'Http\\Factory\\Guzzle\\' => 20,
-        ),
-        'G' => 
-        array (
-            'GuzzleHttp\\Psr7\\' => 16,
-        ),
         'F' => 
         array (
             'Fig\\Http\\Message\\' => 17,
             'FastRoute\\' => 10,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -88,10 +55,6 @@ class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
         array (
             0 => __DIR__ . '/..' . '/selective/basepath/src',
         ),
-        'Sapphirecat\\Slim4HttpInteropAdapter\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/sapphirecat/slim4-http-interop-adapter/src',
-        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
@@ -110,30 +73,6 @@ class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Nyholm\\Psr7\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nyholm/psr7/src',
-        ),
-        'Nyholm\\Psr7Server\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nyholm/psr7-server/src',
-        ),
-        'Laminas\\Diactoros\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-diactoros/src',
-        ),
-        'Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
-        ),
-        'Http\\Factory\\Guzzle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/http-interop/http-factory-guzzle/src',
-        ),
-        'GuzzleHttp\\Psr7\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
-        ),
         'Fig\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/fig/http-message-util/src',
@@ -142,12 +81,155 @@ class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
     );
 
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'FastRoute\\BadRouteException' => __DIR__ . '/..' . '/nikic/fast-route/src/BadRouteException.php',
+        'FastRoute\\DataGenerator' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator.php',
+        'FastRoute\\DataGenerator\\CharCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/CharCountBased.php',
+        'FastRoute\\DataGenerator\\GroupCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/GroupCountBased.php',
+        'FastRoute\\DataGenerator\\GroupPosBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/GroupPosBased.php',
+        'FastRoute\\DataGenerator\\MarkBased' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/MarkBased.php',
+        'FastRoute\\DataGenerator\\RegexBasedAbstract' => __DIR__ . '/..' . '/nikic/fast-route/src/DataGenerator/RegexBasedAbstract.php',
+        'FastRoute\\Dispatcher' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher.php',
+        'FastRoute\\Dispatcher\\CharCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/CharCountBased.php',
+        'FastRoute\\Dispatcher\\GroupCountBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/GroupCountBased.php',
+        'FastRoute\\Dispatcher\\GroupPosBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/GroupPosBased.php',
+        'FastRoute\\Dispatcher\\MarkBased' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/MarkBased.php',
+        'FastRoute\\Dispatcher\\RegexBasedAbstract' => __DIR__ . '/..' . '/nikic/fast-route/src/Dispatcher/RegexBasedAbstract.php',
+        'FastRoute\\Route' => __DIR__ . '/..' . '/nikic/fast-route/src/Route.php',
+        'FastRoute\\RouteCollector' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteCollector.php',
+        'FastRoute\\RouteParser' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteParser.php',
+        'FastRoute\\RouteParser\\Std' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteParser/Std.php',
+        'Fig\\Http\\Message\\RequestMethodInterface' => __DIR__ . '/..' . '/fig/http-message-util/src/RequestMethodInterface.php',
+        'Fig\\Http\\Message\\StatusCodeInterface' => __DIR__ . '/..' . '/fig/http-message-util/src/StatusCodeInterface.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+        'Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
+        'Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',
+        'Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/NotFoundExceptionInterface.php',
+        'Psr\\Http\\Message\\MessageInterface' => __DIR__ . '/..' . '/psr/http-message/src/MessageInterface.php',
+        'Psr\\Http\\Message\\RequestFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/RequestFactoryInterface.php',
+        'Psr\\Http\\Message\\RequestInterface' => __DIR__ . '/..' . '/psr/http-message/src/RequestInterface.php',
+        'Psr\\Http\\Message\\ResponseFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/ResponseFactoryInterface.php',
+        'Psr\\Http\\Message\\ResponseInterface' => __DIR__ . '/..' . '/psr/http-message/src/ResponseInterface.php',
+        'Psr\\Http\\Message\\ServerRequestFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/ServerRequestFactoryInterface.php',
+        'Psr\\Http\\Message\\ServerRequestInterface' => __DIR__ . '/..' . '/psr/http-message/src/ServerRequestInterface.php',
+        'Psr\\Http\\Message\\StreamFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/StreamFactoryInterface.php',
+        'Psr\\Http\\Message\\StreamInterface' => __DIR__ . '/..' . '/psr/http-message/src/StreamInterface.php',
+        'Psr\\Http\\Message\\UploadedFileFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UploadedFileFactoryInterface.php',
+        'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
+        'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
+        'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
+        'Psr\\Http\\Server\\MiddlewareInterface' => __DIR__ . '/..' . '/psr/http-server-middleware/src/MiddlewareInterface.php',
+        'Psr\\Http\\Server\\RequestHandlerInterface' => __DIR__ . '/..' . '/psr/http-server-handler/src/RequestHandlerInterface.php',
+        'Psr\\Log\\AbstractLogger' => __DIR__ . '/..' . '/psr/log/src/AbstractLogger.php',
+        'Psr\\Log\\InvalidArgumentException' => __DIR__ . '/..' . '/psr/log/src/InvalidArgumentException.php',
+        'Psr\\Log\\LogLevel' => __DIR__ . '/..' . '/psr/log/src/LogLevel.php',
+        'Psr\\Log\\LoggerAwareInterface' => __DIR__ . '/..' . '/psr/log/src/LoggerAwareInterface.php',
+        'Psr\\Log\\LoggerAwareTrait' => __DIR__ . '/..' . '/psr/log/src/LoggerAwareTrait.php',
+        'Psr\\Log\\LoggerInterface' => __DIR__ . '/..' . '/psr/log/src/LoggerInterface.php',
+        'Psr\\Log\\LoggerTrait' => __DIR__ . '/..' . '/psr/log/src/LoggerTrait.php',
+        'Psr\\Log\\NullLogger' => __DIR__ . '/..' . '/psr/log/src/NullLogger.php',
+        'Selective\\BasePath\\BasePathDetector' => __DIR__ . '/..' . '/selective/basepath/src/BasePathDetector.php',
+        'Selective\\BasePath\\BasePathMiddleware' => __DIR__ . '/..' . '/selective/basepath/src/BasePathMiddleware.php',
+        'Slim\\App' => __DIR__ . '/..' . '/slim/slim/Slim/App.php',
+        'Slim\\CallableResolver' => __DIR__ . '/..' . '/slim/slim/Slim/CallableResolver.php',
+        'Slim\\Error\\AbstractErrorRenderer' => __DIR__ . '/..' . '/slim/slim/Slim/Error/AbstractErrorRenderer.php',
+        'Slim\\Error\\Renderers\\HtmlErrorRenderer' => __DIR__ . '/..' . '/slim/slim/Slim/Error/Renderers/HtmlErrorRenderer.php',
+        'Slim\\Error\\Renderers\\JsonErrorRenderer' => __DIR__ . '/..' . '/slim/slim/Slim/Error/Renderers/JsonErrorRenderer.php',
+        'Slim\\Error\\Renderers\\PlainTextErrorRenderer' => __DIR__ . '/..' . '/slim/slim/Slim/Error/Renderers/PlainTextErrorRenderer.php',
+        'Slim\\Error\\Renderers\\XmlErrorRenderer' => __DIR__ . '/..' . '/slim/slim/Slim/Error/Renderers/XmlErrorRenderer.php',
+        'Slim\\Exception\\HttpBadRequestException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpBadRequestException.php',
+        'Slim\\Exception\\HttpException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpException.php',
+        'Slim\\Exception\\HttpForbiddenException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpForbiddenException.php',
+        'Slim\\Exception\\HttpGoneException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpGoneException.php',
+        'Slim\\Exception\\HttpInternalServerErrorException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpInternalServerErrorException.php',
+        'Slim\\Exception\\HttpMethodNotAllowedException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpMethodNotAllowedException.php',
+        'Slim\\Exception\\HttpNotFoundException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpNotFoundException.php',
+        'Slim\\Exception\\HttpNotImplementedException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpNotImplementedException.php',
+        'Slim\\Exception\\HttpSpecializedException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpSpecializedException.php',
+        'Slim\\Exception\\HttpUnauthorizedException' => __DIR__ . '/..' . '/slim/slim/Slim/Exception/HttpUnauthorizedException.php',
+        'Slim\\Factory\\AppFactory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/AppFactory.php',
+        'Slim\\Factory\\Psr17\\GuzzlePsr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/GuzzlePsr17Factory.php',
+        'Slim\\Factory\\Psr17\\HttpSoftPsr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/HttpSoftPsr17Factory.php',
+        'Slim\\Factory\\Psr17\\LaminasDiactorosPsr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/LaminasDiactorosPsr17Factory.php',
+        'Slim\\Factory\\Psr17\\NyholmPsr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/NyholmPsr17Factory.php',
+        'Slim\\Factory\\Psr17\\Psr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/Psr17Factory.php',
+        'Slim\\Factory\\Psr17\\Psr17FactoryProvider' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/Psr17FactoryProvider.php',
+        'Slim\\Factory\\Psr17\\ServerRequestCreator' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/ServerRequestCreator.php',
+        'Slim\\Factory\\Psr17\\SlimHttpPsr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/SlimHttpPsr17Factory.php',
+        'Slim\\Factory\\Psr17\\SlimHttpServerRequestCreator' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/SlimHttpServerRequestCreator.php',
+        'Slim\\Factory\\Psr17\\SlimPsr17Factory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/Psr17/SlimPsr17Factory.php',
+        'Slim\\Factory\\ServerRequestCreatorFactory' => __DIR__ . '/..' . '/slim/slim/Slim/Factory/ServerRequestCreatorFactory.php',
+        'Slim\\Handlers\\ErrorHandler' => __DIR__ . '/..' . '/slim/slim/Slim/Handlers/ErrorHandler.php',
+        'Slim\\Handlers\\Strategies\\RequestHandler' => __DIR__ . '/..' . '/slim/slim/Slim/Handlers/Strategies/RequestHandler.php',
+        'Slim\\Handlers\\Strategies\\RequestResponse' => __DIR__ . '/..' . '/slim/slim/Slim/Handlers/Strategies/RequestResponse.php',
+        'Slim\\Handlers\\Strategies\\RequestResponseArgs' => __DIR__ . '/..' . '/slim/slim/Slim/Handlers/Strategies/RequestResponseArgs.php',
+        'Slim\\Handlers\\Strategies\\RequestResponseNamedArgs' => __DIR__ . '/..' . '/slim/slim/Slim/Handlers/Strategies/RequestResponseNamedArgs.php',
+        'Slim\\Interfaces\\AdvancedCallableResolverInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/AdvancedCallableResolverInterface.php',
+        'Slim\\Interfaces\\CallableResolverInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/CallableResolverInterface.php',
+        'Slim\\Interfaces\\DispatcherInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/DispatcherInterface.php',
+        'Slim\\Interfaces\\ErrorHandlerInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/ErrorHandlerInterface.php',
+        'Slim\\Interfaces\\ErrorRendererInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/ErrorRendererInterface.php',
+        'Slim\\Interfaces\\InvocationStrategyInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/InvocationStrategyInterface.php',
+        'Slim\\Interfaces\\MiddlewareDispatcherInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/MiddlewareDispatcherInterface.php',
+        'Slim\\Interfaces\\Psr17FactoryInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/Psr17FactoryInterface.php',
+        'Slim\\Interfaces\\Psr17FactoryProviderInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/Psr17FactoryProviderInterface.php',
+        'Slim\\Interfaces\\RequestHandlerInvocationStrategyInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RequestHandlerInvocationStrategyInterface.php',
+        'Slim\\Interfaces\\RouteCollectorInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RouteCollectorInterface.php',
+        'Slim\\Interfaces\\RouteCollectorProxyInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RouteCollectorProxyInterface.php',
+        'Slim\\Interfaces\\RouteGroupInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RouteGroupInterface.php',
+        'Slim\\Interfaces\\RouteInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RouteInterface.php',
+        'Slim\\Interfaces\\RouteParserInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RouteParserInterface.php',
+        'Slim\\Interfaces\\RouteResolverInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/RouteResolverInterface.php',
+        'Slim\\Interfaces\\ServerRequestCreatorInterface' => __DIR__ . '/..' . '/slim/slim/Slim/Interfaces/ServerRequestCreatorInterface.php',
+        'Slim\\Logger' => __DIR__ . '/..' . '/slim/slim/Slim/Logger.php',
+        'Slim\\MiddlewareDispatcher' => __DIR__ . '/..' . '/slim/slim/Slim/MiddlewareDispatcher.php',
+        'Slim\\Middleware\\BodyParsingMiddleware' => __DIR__ . '/..' . '/slim/slim/Slim/Middleware/BodyParsingMiddleware.php',
+        'Slim\\Middleware\\ContentLengthMiddleware' => __DIR__ . '/..' . '/slim/slim/Slim/Middleware/ContentLengthMiddleware.php',
+        'Slim\\Middleware\\ErrorMiddleware' => __DIR__ . '/..' . '/slim/slim/Slim/Middleware/ErrorMiddleware.php',
+        'Slim\\Middleware\\MethodOverrideMiddleware' => __DIR__ . '/..' . '/slim/slim/Slim/Middleware/MethodOverrideMiddleware.php',
+        'Slim\\Middleware\\OutputBufferingMiddleware' => __DIR__ . '/..' . '/slim/slim/Slim/Middleware/OutputBufferingMiddleware.php',
+        'Slim\\Middleware\\RoutingMiddleware' => __DIR__ . '/..' . '/slim/slim/Slim/Middleware/RoutingMiddleware.php',
+        'Slim\\Psr7\\Cookies' => __DIR__ . '/..' . '/slim/psr7/src/Cookies.php',
+        'Slim\\Psr7\\Environment' => __DIR__ . '/..' . '/slim/psr7/src/Environment.php',
+        'Slim\\Psr7\\Factory\\RequestFactory' => __DIR__ . '/..' . '/slim/psr7/src/Factory/RequestFactory.php',
+        'Slim\\Psr7\\Factory\\ResponseFactory' => __DIR__ . '/..' . '/slim/psr7/src/Factory/ResponseFactory.php',
+        'Slim\\Psr7\\Factory\\ServerRequestFactory' => __DIR__ . '/..' . '/slim/psr7/src/Factory/ServerRequestFactory.php',
+        'Slim\\Psr7\\Factory\\StreamFactory' => __DIR__ . '/..' . '/slim/psr7/src/Factory/StreamFactory.php',
+        'Slim\\Psr7\\Factory\\UploadedFileFactory' => __DIR__ . '/..' . '/slim/psr7/src/Factory/UploadedFileFactory.php',
+        'Slim\\Psr7\\Factory\\UriFactory' => __DIR__ . '/..' . '/slim/psr7/src/Factory/UriFactory.php',
+        'Slim\\Psr7\\Header' => __DIR__ . '/..' . '/slim/psr7/src/Header.php',
+        'Slim\\Psr7\\Headers' => __DIR__ . '/..' . '/slim/psr7/src/Headers.php',
+        'Slim\\Psr7\\Interfaces\\HeadersInterface' => __DIR__ . '/..' . '/slim/psr7/src/Interfaces/HeadersInterface.php',
+        'Slim\\Psr7\\Message' => __DIR__ . '/..' . '/slim/psr7/src/Message.php',
+        'Slim\\Psr7\\NonBufferedBody' => __DIR__ . '/..' . '/slim/psr7/src/NonBufferedBody.php',
+        'Slim\\Psr7\\Request' => __DIR__ . '/..' . '/slim/psr7/src/Request.php',
+        'Slim\\Psr7\\Response' => __DIR__ . '/..' . '/slim/psr7/src/Response.php',
+        'Slim\\Psr7\\Stream' => __DIR__ . '/..' . '/slim/psr7/src/Stream.php',
+        'Slim\\Psr7\\UploadedFile' => __DIR__ . '/..' . '/slim/psr7/src/UploadedFile.php',
+        'Slim\\Psr7\\Uri' => __DIR__ . '/..' . '/slim/psr7/src/Uri.php',
+        'Slim\\ResponseEmitter' => __DIR__ . '/..' . '/slim/slim/Slim/ResponseEmitter.php',
+        'Slim\\Routing\\Dispatcher' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/Dispatcher.php',
+        'Slim\\Routing\\FastRouteDispatcher' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/FastRouteDispatcher.php',
+        'Slim\\Routing\\Route' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/Route.php',
+        'Slim\\Routing\\RouteCollector' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteCollector.php',
+        'Slim\\Routing\\RouteCollectorProxy' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteCollectorProxy.php',
+        'Slim\\Routing\\RouteContext' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteContext.php',
+        'Slim\\Routing\\RouteGroup' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteGroup.php',
+        'Slim\\Routing\\RouteParser' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteParser.php',
+        'Slim\\Routing\\RouteResolver' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteResolver.php',
+        'Slim\\Routing\\RouteRunner' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RouteRunner.php',
+        'Slim\\Routing\\RoutingResults' => __DIR__ . '/..' . '/slim/slim/Slim/Routing/RoutingResults.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
+        'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
@@ -155,9 +237,9 @@ class ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit09faa1b1a5fef6cd9de9a7607dc93688::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79::$classMap;
 
         }, null, ClassLoader::class);
     }

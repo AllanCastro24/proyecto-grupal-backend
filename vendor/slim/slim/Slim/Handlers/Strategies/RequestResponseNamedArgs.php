@@ -13,14 +13,20 @@ namespace Slim\Handlers\Strategies;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Interfaces\InvocationStrategyInterface;
-
-use function array_values;
+use RuntimeException;
 
 /**
  * Route callback strategy with route parameters as individual arguments.
  */
-class RequestResponseArgs implements InvocationStrategyInterface
+class RequestResponseNamedArgs implements InvocationStrategyInterface
 {
+    public function __construct()
+    {
+        if (PHP_VERSION_ID < 80000) {
+            throw new RuntimeException('Named arguments are only available for PHP >= 8.0.0');
+        }
+    }
+
     /**
      * Invoke a route callable with request, response and all route parameters
      * as individual arguments.
@@ -38,6 +44,6 @@ class RequestResponseArgs implements InvocationStrategyInterface
         ResponseInterface $response,
         array $routeArguments
     ): ResponseInterface {
-        return $callable($request, $response, ...array_values($routeArguments));
+        return $callable($request, $response, ...$routeArguments);
     }
 }
