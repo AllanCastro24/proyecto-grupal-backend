@@ -33,6 +33,7 @@ class ComposerAutoloaderInit5e9e0630d8dc7f2207d2d94c2f469b79
         $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
         if ($useStaticLoader) {
             require __DIR__ . '/autoload_static.php';
+
             call_user_func(\Composer\Autoload\ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79::getInitializer($loader));
         } else {
             $map = require __DIR__ . '/autoload_namespaces.php';
@@ -54,6 +55,7 @@ class ComposerAutoloaderInit5e9e0630d8dc7f2207d2d94c2f469b79
         $loader->register(true);
 
         if ($useStaticLoader) {
+
             $includeFiles = Composer\Autoload\ComposerStaticInit5e9e0630d8dc7f2207d2d94c2f469b79::$files;
         } else {
             $includeFiles = require __DIR__ . '/autoload_files.php';
