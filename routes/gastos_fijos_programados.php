@@ -1,6 +1,7 @@
 <?php
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Models\DB;
 
 $app->get('/api/costos_programados/consultar', function(Request $request, Response $response){
     $consulta = "SELECT gastos_fijos_programados.id_gasto_fijo, tipo_gasto.nombre as nom_tipo, gastos_fijos_programados.descripcion, gastos_fijos_programados.cantidad,

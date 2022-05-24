@@ -1,6 +1,7 @@
 <?php
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Models\DB;
 
  //TODAS LAS ENTRADAS
  $app->get('/api/almacen/movimientos/entradas/todas', function(Request $request, Response $response){
