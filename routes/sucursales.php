@@ -8,12 +8,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 $app->get('/api/sucursales/consultar', function(Request $request, Response $response){
     $consulta = "SELECT * FROM sucursales where sucursales.status = '1'";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
-        $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
+        $sucursales = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        $response->getBody()->write(json_encode($gastos));
+        $response->getBody()->write(json_encode($sucursales));
         return $response;// $gastos;
     } catch(PDOException $e){
         echo '{"error": {"text":  '.$e->getMessage().'}';

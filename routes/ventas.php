@@ -12,9 +12,9 @@ $app->get('/api/ventas_terminadas/consultar', function(Request $request, Respons
     INNER JOIN categoriasmenu ON pedidoscomida.categoryId = categoriasmenu.id
     WHERE pedidoscomida.estatus = 'Terminado'";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -35,9 +35,9 @@ $app->get('/api/ventas_espera/consultar', function(Request $request, Response $r
     INNER JOIN categoriasmenu ON pedidoscomida.categoryId = categoriasmenu.id
     WHERE pedidoscomida.estatus = 'En espera'";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -61,9 +61,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     INNER JOIN categoriasmenu ON pedidoscomida.categoryId = categoriasmenu.id
     WHERE pedidoscomida.estatus = 'Terminado' and MONTH(pedidoscomida.fecha) = '$mes' and YEAR(pedidoscomida.fecha) = '$year'";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -84,9 +84,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     INNER JOIN categoriasmenu ON pedidoscomida.categoryId = categoriasmenu.id
     WHERE pedidoscomida.estatus = 'Terminado'  and YEAR(pedidoscomida.fecha) = '$year' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -107,9 +107,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     INNER JOIN categoriasmenu ON pedidoscomida.categoryId = categoriasmenu.id
     WHERE pedidoscomida.estatus = 'Terminado'  and date(pedidoscomida.fecha) = '$day' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -131,9 +131,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     INNER JOIN categoriasmenu ON pedidoscomida.categoryId = categoriasmenu.id
     WHERE pedidoscomida.estatus = 'Terminado'  and  date(pedidoscomida.fecha) BETWEEN '$inicio' AND '$fin';";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -158,9 +158,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     ORDER BY SUM(pedidoscomida.price) DESC
     LIMIT 0 , 30 ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -179,9 +179,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     ORDER BY SUM(pedidoscomida.price) DESC
     LIMIT 0 , 30 ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -202,9 +202,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     ORDER BY SUM(pedidoscomida.price) DESC
     LIMIT 0 , 30 ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -225,9 +225,9 @@ $app->get('/api/ventas/mes/{mes}/{year}', function(Request $request, Response $r
     ORDER BY SUM(pedidoscomida.price) DESC
     LIMIT 0 , 30 ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));

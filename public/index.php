@@ -11,8 +11,8 @@ require __DIR__ . '/../src/Models/db.php';
 
 
 
-$bd = new BD();
-$bd = $bd->conexionBD();
+$db = new Db();
+$conn = $db->connect();
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();

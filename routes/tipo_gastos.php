@@ -9,9 +9,9 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
     INNER JOIN status
     ON tipo_gasto.status = status.idstatus";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -24,9 +24,9 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
  $app->get('/api/tipo_gastos/select', function(Request $request, Response $response){
   $consulta = "SELECT * FROM tipo_gasto where tipo_gasto.status ='1'";
   try{
-      $db = new BD();
-      $db = $db->conexionBD();
-      $ejecutar = $db->query($consulta);
+      $db = new Db();
+      $conn = $db->connect();
+      $ejecutar = $conn->query($consulta);
       $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
       $db = null;
       $response->getBody()->write(json_encode($gastos));
@@ -46,9 +46,9 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
     $sql = "INSERT INTO tipo_gasto ( nombre, status) VALUES 
             (:nombre, :status)";
     try {
-        $db = new BD();
-        $db = $db->conexionBD();
-        $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->query($sql);
         $resultado->bindParam(':nombre', $nombre);
         $resultado->bindParam(':status', $status);
  
@@ -87,10 +87,9 @@ $app->get('/api/tipo_gastos/consultar', function(Request $request, Response $res
     WHERE id_tipo = '$id' ";
    
     try {
-      $db = new BD();
-      $db = $db->conexionBD();
-     
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->query($sql);
  
       $resultado->bindParam(':nombre', $nombre);
       $resultado->bindParam(':status', $status);
@@ -128,10 +127,9 @@ $app->put('/api/tipo_gastos/baja/{id}/{status}',function (Request $request, Resp
 
     }
     try {
-      $db = new BD();
-      $db = $db->conexionBD();
-
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->query($sql);
  
       $resultado->execute();
    
