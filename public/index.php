@@ -237,7 +237,7 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
     $db = null;
     $usuario = $resultado->fetch(PDO::FETCH_ASSOC);
     if ($usuario){
-      $response->getBody()->write("Bienvenido");
+      $response->getBody()->write(json_encode($usuario));
       return $response 
           ->withHeader('content-type','aplication/json')
           ->withStatus(200);
