@@ -9,9 +9,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     INNER JOIN tipo_movimiento ON movimientos.id_tipo_movimiento = tipo_movimiento.id_tipo_movimiento
     WHERE movimientos.id_tipo_movimiento = 1 ';
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -33,9 +33,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     WHERE movimientos.id_tipo_movimiento = 1 
     AND MONTH(movimientos.fecha) = '$mes' AND YEAR(movimientos.fecha) = '$year' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -55,9 +55,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     WHERE movimientos.id_tipo_movimiento = 1 
     AND movimientos.fecha = '$day' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -79,9 +79,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     WHERE movimientos.id_tipo_movimiento = 1 
     AND movimientos.fecha BETWEEN '$inicio' AND '$fin' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -99,9 +99,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     INNER JOIN tipo_movimiento ON movimientos.id_tipo_movimiento = tipo_movimiento.id_tipo_movimiento
     WHERE movimientos.id_tipo_movimiento = 2 ';
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -123,9 +123,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     WHERE movimientos.id_tipo_movimiento = 2 
     AND MONTH(movimientos.fecha) = '$mes' AND YEAR(movimientos.fecha) = '$year' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -145,9 +145,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     WHERE movimientos.id_tipo_movimiento = 2 
     AND movimientos.fecha = '$day' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -169,9 +169,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     WHERE movimientos.id_tipo_movimiento = 2 
     AND movimientos.fecha BETWEEN '$inicio' AND '$fin' ";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+        $db = new Db();
+        $conn = $db->connect();
+        $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));

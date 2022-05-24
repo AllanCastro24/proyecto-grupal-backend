@@ -14,9 +14,9 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
        ON gastos_fijos_programados.status = status.idstatus
        WHERE gastos_fijos_programados.status = '1'";
     try{
-        $db = new BD();
-        $db = $db->conexionBD();
-        $ejecutar = $db->query($consulta);
+      $db = new Db();
+      $conn = $db->connect();
+      $ejecutar = $conn->query($consulta);
         $gastos = $ejecutar->fetchAll(PDO::FETCH_OBJ);
         $db = null;
         $response->getBody()->write(json_encode($gastos));
@@ -41,9 +41,9 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
     $sql = "INSERT INTO gastos_fijos_programados (tipo_gasto, descripcion, cantidad, fecha, id_sucursal, periodicidad, status) VALUES 
             (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :periodicidad, :status)";
     try {
-        $db = new BD();
-        $db = $db->conexionBD();
-        $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->query($sql);
         $resultado->bindParam(':tipo_gasto', $tipo_gasto);
         $resultado->bindParam(':descripcion', $descripcion);
         $resultado->bindParam(':cantidad', $cantidad);
@@ -98,10 +98,9 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
     WHERE id_gasto_fijo = '$id' ";
    
     try {
-      $db = new BD();
-      $db = $db->conexionBD();
-     
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->query($sql);
       $resultado->bindParam(':tipo_gasto', $tipo_gasto);
       $resultado->bindParam(':descripcion', $descripcion);
       $resultado->bindParam(':cantidad', $cantidad);
@@ -144,9 +143,9 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
     }
 
      try {
-       $db = new BD();
-       $db = $db->conexionBD();
-       $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->query($sql);
   
        $resultado->execute();
     
