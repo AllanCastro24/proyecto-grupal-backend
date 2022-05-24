@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET, POST, HEAD, PUT");
@@ -24,18 +25,17 @@ use PHPMailer\PHPMailer\Exception;
 use Slim\Http\UploadedFile;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
 require __DIR__ . '/../conexion/conexion.php';
 
 require './PHPMailer-master/src/Exception.php';
-    require './PHPMailer-master/src/PHPMailer.php';
-    require './PHPMailer-master/src/SMTP.php';
+require './PHPMailer-master/src/PHPMailer.php';
+require './PHPMailer-master/src/SMTP.php';
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->add(new BasePathMiddleware($app));
 $app->addErrorMiddleware(true, true, true);
-
+$app->setBasePath('/proyecto-grupal-backend/public');
 $bd = new BD();
 $bd = $bd->coneccionBD();
 
@@ -58,6 +58,13 @@ $app->add(function ($request, $handler) {
   // $response->getBody()->write('Hello World!');
   // return $response;
 //});
+
+require __DIR__ . '/../routes/gastos_fijos.php';
+require __DIR__ . '/../routes/tipo_gastos.php';
+require __DIR__ . '/../routes/ventas.php';
+require __DIR__ . '/../routes/sucursales.php';
+require __DIR__ . '/../routes/almacen.php';
+require __DIR__ . '/../routes/gastos_fijos_programados.php';
 
 //======================================== OBTENER Almacen Compuesto ==============================================
 $app->get('/GetAlmacenCompuesto', function (Request $request, Response $response) {
@@ -3692,4 +3699,5 @@ $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function($r
   return $handler($req, $res);
 });
 // no borrarr
+
 $app->run();
