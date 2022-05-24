@@ -88,9 +88,9 @@ $app->post('/api/empleado/add', function(Request $request, Response $response, a
 
   $sql = "INSERT INTO pruebas.empleado VALUES($id_user,:nombre, :apellido, :sueldo, :direccion, :telefono, :genero, :puesto, :tipo_pago, :tienda,:sucursal);";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':nombre', $nombre);
       $resultado->bindParam(':apellido', $apellidos);
       $resultado->bindParam(':sueldo', $sueldo);
@@ -135,9 +135,9 @@ $app->post('/api/usuarios/add', function(Request $request, Response $response, a
   $imagen = "";
   $sql = "INSERT INTO pruebas.usuarios VALUES (null,:usuario,:pass,'S',:fecha,:fecha,:mail,:imagen)";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':usuario', $usuario);
       $resultado->bindParam(':mail', $mail);
       $resultado->bindParam(':pass', $pass);
@@ -168,51 +168,53 @@ $app->post('/api/usuarios/add', function(Request $request, Response $response, a
 
 //Consultar a todos los usuarios y empleados para el admin (falta where id usuario = id_usuario_empleado)
 $app->get('/api/usuarios/consultar_empleado', function(Request $request, Response $response){
-  $consulta = 'SELECT * FROM pruebas.usuarios INNER JOIN empleado ON usuarios.ID_usuario = empleado.ID_empleado';
-  try{
-    $bd = new BD();
-    $bd = $bd->conexionBD();
-    $resultado = $bd->query($consulta);
-
-    if ($resultado->rowCount() > 0){
-      $user = $resultado->fetchAll(PDO::FETCH_OBJ);
-      //echo json_encode($user);
-      $response->getBody()->write(json_encode($user));
-      return $response
-      ->withHeader('content-type','aplication/json')
-      ->withStatus(200);
-    }else {
-      echo json_encode("No existen empleados en la BD.");
-    }
-    $resultado = null;
+  $sql = 'SELECT * FROM pruebas.usuarios INNER JOIN empleado ON usuarios.ID_usuario = empleado.ID_empleado';
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
     $db = null;
-  }catch(PDOException $e){
-    echo '{"error" : {"text":'.$e->getMessage().'}';
+   
+    $response->getBody()->write(json_encode($customers));
+    return $response
+    ->withHeader('content-type', 'application/json')
+    ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+ 
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
   }
 });
 
 $app->get('/api/usuarios/consultar_usuarios', function(Request $request, Response $response){
   //$consulta = 'SELECT * FROM pruebas.usuarios';
-  $consulta = "SELECT * FROM usuarios Where Not exists (select ID_empleado from empleado Where ID_usuario = ID_empleado)";
-  try{
-    $bd = new BD();
-    $bd = $bd->conexionBD();
-    $resultado = $bd->query($consulta);
-
-    if ($resultado->rowCount() > 0){
-      $user = $resultado->fetchAll(PDO::FETCH_OBJ);
-      //echo json_encode($user);
-      $response->getBody()->write(json_encode($user));
-      return $response
-      ->withHeader('content-type','aplication/json')
-      ->withStatus(200);
-    }else {
-      echo json_encode("No existen usuarios en la BD.");
-    }
-    $resultado = null;
+  $sql = "SELECT * FROM usuarios Where Not exists (select ID_empleado from empleado Where ID_usuario = ID_empleado)";
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
     $db = null;
-  }catch(PDOException $e){
-    echo '{"error" : {"text":'.$e->getMessage().'}';
+   
+    $response->getBody()->write(json_encode($customers));
+    return $response
+    ->withHeader('content-type', 'application/json')
+    ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+ 
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
   }
 });
 
@@ -223,11 +225,11 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
   $user = $data['username'];
   $pass = $data['password'];
   //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
-  $consulta = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass AND Activo="S"';
+  $sql = 'SELECT * FROM usuarios WHERE Usuario=:user AND pass=:pass AND Activo="S"';
   try {
-    $db = new BD();
-    $db = $db->conexionBD();
-    $resultado = $db->prepare($consulta);
+    $db = new Db();
+    $conn = $db->connect();
+    $resultado = $conn->prepare($sql);
     $resultado->bindParam(':user', $user);
     $resultado->bindParam(':pass', $pass);
     $resultado->execute();
@@ -270,9 +272,9 @@ $app->put('/api/usuarios/modificar/{id}', function(Request $request, Response $r
   
   $sql = "UPDATE pruebas.usuarios SET Usuario=:user, Correo=:mail, image=:imagen WHERE ID_usuario=:id";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':id', $id);
       $resultado->bindParam(':user', $usuario);
       $resultado->bindParam(':mail', $correo);
@@ -307,9 +309,9 @@ $app->put('/api/usuarios/modificar_pass/{id}', function(Request $request, Respon
 
   $sql = "UPDATE pruebas.usuarios SET pass=:pass WHERE ID_usuario=:id";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':id', $id);
       $resultado->bindParam(':pass', $pass);
       $resultado->execute();
@@ -351,9 +353,9 @@ $app->put('/api/empleado/modificar/{id}', function(Request $request, Response $r
 
   $sql = "UPDATE pruebas.empleado SET Nombre=:nombre, Apellidos=:apellido, Sueldo=:sueldo, Direccion=:direccion, Telefono=:telefono, Genero=:genero, ID_puesto=:puesto, `ID_tipo_pago`=:pago, ID_tienda=:tienda, ID_sucursal=:sucursal WHERE ID_empleado=:id";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':id', $id);
       $resultado->bindParam(':nombre', $nombre);
       $resultado->bindParam(':apellido', $apellido);
@@ -396,9 +398,9 @@ $app->put('/api/usuarios/activar/{id}', function(Request $request, Response $res
 
   $sql = "UPDATE pruebas.usuarios SET Activo='S' WHERE ID_usuario=:id";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':id', $id);
       
       $resultado->execute();
@@ -430,9 +432,9 @@ $app->put('/api/usuarios/desactivar/{id}', function(Request $request, Response $
 
   $sql = "UPDATE pruebas.usuarios SET Activo='N' WHERE ID_usuario=:id";
   try {
-      $db = new BD();
-      $db = $db->conexionBD();
-      $resultado = $db->prepare($sql);
+      $db = new Db();
+      $conn = $db->connect();
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':id', $id);
       
       $resultado->execute();
