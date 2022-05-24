@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET, POST, HEAD, PUT");
@@ -14,10 +15,15 @@ use Selective\BasePath\BasePathMiddleware;
 use Slim\Factory\AppFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../src/Models/db.php';
+
+$bd = new BD();
+$bd = $bd->conexionBD();
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
+$app->setBasePath('/proyecto-grupal-backend/public');
 $app->add(new BasePathMiddleware($app));
 $app->addErrorMiddleware(true, true, true);
 
@@ -40,7 +46,12 @@ $app->add(function ($request, $handler) {
   // $response->getBody()->write('Hello World!');
   // return $response;
 //});
-
+require __DIR__ . '/../routes/gastos_fijos.php';
+require __DIR__ . '/../routes/tipo_gastos.php';
+require __DIR__ . '/../routes/ventas.php';
+require __DIR__ . '/../routes/sucursales.php';
+require __DIR__ . '/../routes/almacen.php';
+require __DIR__ . '/../routes/gastos_fijos_programados.php';
 //======================================== OBTENER Almacen Compuesto ==============================================
 $app->get('/GetAlmacenCompuesto', function (Request $request, Response $response) {
   $sql = "SELECT almacen.id_almacen, insumos.codigo, insumos.nombre, detalle_insumo.tamano, detalle_insumo.presentacion, detalle_insumo.imagen, 
