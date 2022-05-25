@@ -242,7 +242,47 @@ $app->post('/api/usuarios/login', function(Request $request, Response $response,
           ->withHeader('content-type','aplication/json')
           ->withStatus(200);
     } else{
-      $response->getBody()->write("Usuario o contraseña incorrecto");
+      $response->getBody()->write(json_encode("Usuario o contraseña incorrecto"));
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+    }
+    
+
+  } catch (PDOException $e) {
+    echo '{"errorr": {"text":  '.$e->getMessage().'}';
+    $error = array(
+        "message" => $e->getMessage()
+    );
+
+    $response->getBody()->write(json_encode($error));
+    return $response
+        ->withHeader('content-type','aplication/json')
+        ->withStatus(500);
+  }
+});
+$app->post('/api/usuarios/buscarUser', function(Request $request, Response $response, array $args){
+  $data = $request->getParsedBody();
+  
+  $id = $data['ID_usuario'];
+  //SELECT ID_usuario, Usuario, Contraseña, Activo, `Fecha-registro`, `Ultimo-ingreso`, Correo FROM pruebas.usuarios
+  $sql = 'SELECT * FROM empleado WHERE ID_empleado=:id';
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $resultado = $conn->prepare($sql);
+    $resultado->bindParam(':id', $id);
+    $resultado->execute();
+    
+    $db = null;
+    $usuario = $resultado->fetch(PDO::FETCH_ASSOC);
+    if ($usuario){
+      $response->getBody()->write(json_encode($usuario));
+      return $response 
+          ->withHeader('content-type','aplication/json')
+          ->withStatus(200);
+    } else{
+      $response->getBody()->write(json_encode("No es empleado"));
       return $response 
           ->withHeader('content-type','aplication/json')
           ->withStatus(200);
@@ -458,7 +498,81 @@ $app->put('/api/usuarios/desactivar/{id}', function(Request $request, Response $
           ->withStatus(500);
   }
 });
-
+//Puesto
+$app->get('/api/usuarios/puesto', function(Request $request, Response $response){
+  $sql = 'SELECT * FROM pruebas.puesto';
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $db = null;
+   
+    $response->getBody()->write(json_encode($customers));
+    return $response
+    ->withHeader('content-type', 'application/json')
+    ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+ 
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
+  }
+});
+//Tienda
+$app->get('/api/usuarios/tienda', function(Request $request, Response $response){
+  $sql = 'SELECT * FROM pruebas.tiendas';
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $db = null;
+   
+    $response->getBody()->write(json_encode($customers));
+    return $response
+    ->withHeader('content-type', 'application/json')
+    ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+ 
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
+  }
+});
+//Sucursal
+$app->get('/api/usuarios/sucursal', function(Request $request, Response $response){
+  $sql = 'SELECT * FROM pruebas.sucursales';
+  try {
+    $db = new Db();
+    $conn = $db->connect();
+    $stmt = $conn->query($sql);
+    $customers = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $db = null;
+   
+    $response->getBody()->write(json_encode($customers));
+    return $response
+    ->withHeader('content-type', 'application/json')
+    ->withStatus(200);
+  } catch (PDOException $e) {
+    $error = array(
+      "message" => $e->getMessage()
+    );
+ 
+    $response->getBody()->write(json_encode($error));
+    return $response
+      ->withHeader('content-type', 'application/json')
+      ->withStatus(500);
+  }
+});
 //======================================== OBTENER Almacen Compuesto ==============================================
 $app->get('/GetAlmacenCompuesto', function (Request $request, Response $response) {
   $sql = "SELECT almacen.id_almacen, insumos.codigo, insumos.nombre, detalle_insumo.tamano, detalle_insumo.presentacion, detalle_insumo.imagen, 
