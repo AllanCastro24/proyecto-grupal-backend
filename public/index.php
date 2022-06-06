@@ -2933,6 +2933,11 @@ $app->get('/mostrartiesuc', function (Request $request, Response $response) {
  //Checar el where de estatus repite varias veces
  //$sql = "SELECT * FROM `pedidoscomida` WHERE estatus = 'ALTA' ";
  $sql = "SELECT * FROM `sucursales` WHERE Status = '1' ";
+ /* $sql = "SELECT
+ sucursales.ID_tienda, 
+ sucursales.ID_sucursal
+FROM
+ sucursales WHERE `Status` = '1' "; */
  try {
    $db = new BD();
    $conn = $db->coneccionBD();
@@ -3833,8 +3838,8 @@ print_r($sucursales);
  $Pseudonimo = ($sucursales['Pseudonimo']);
  $Ubicacion = ($sucursales['Ubicacion']);
  $Fechaalta = ($sucursales['Fechaalta']);
- $idzonsucursal = ($sucursales['ID_zonasucursal']);
- $idempleado = ($sucursales['ID_empleado']);
+ $idzonsucursal = isset(($sucursales['ID_zonasucursal']));
+ $idempleado = isset(($sucursales['ID_empleado']));
  $status = '1';
  $idtienda = ($sucursales['ID_tienda']);
  //$ID_sucursal = ($sucursales['ID_sucursal']);
@@ -4146,7 +4151,7 @@ $app->POST('/subirimg', function (Request $request, Response $response, array $a
  $img = $data;
  print_r($img);
 
-$dir = "/Slim/public/img/";
+$dir = "/img/";
    //$nombre = $params->nombre;
    $nombreArchivo = $img['nombreArchivo'];
    $archivo = $img['base64textString'];
