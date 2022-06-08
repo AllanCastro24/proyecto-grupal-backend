@@ -214,7 +214,7 @@ $app->get('/api/ventas/mes/{mes}/{year}/{sucursal}/{tienda}', function(Request $
     $sucursal = $request->getAttribute('sucursal');
     $tienda = $request->getAttribute('tienda');
     $consulta = "SELECT pedidoscomida.name, SUM(pedidoscomida.price) AS value
-    FROM pedidoscomida  where  pedidoscomida.idsuc = '$sucursal' and pedidoscomida.idtienda = '$tienda' date(pedidoscomida.fecha) BETWEEN '$inicio' AND '$fin' and estatus = 'Terminado' 
+    FROM pedidoscomida  where  pedidoscomida.idsuc = '$sucursal' and pedidoscomida.idtienda = '$tienda' AND date(pedidoscomida.fecha) BETWEEN '$inicio' AND '$fin' and estatus = 'Terminado' 
     GROUP BY pedidoscomida.idpla
     ORDER BY SUM(pedidoscomida.price) DESC
     LIMIT 0 , 30 ";
