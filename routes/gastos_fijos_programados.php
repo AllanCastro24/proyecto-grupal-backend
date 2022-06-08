@@ -3,7 +3,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Models\DB;
 
-$app->get('/api/costos_programados/consultar', function(Request $request, Response $response){
+$app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Request $request, Response $response){
+  $sucursal = $request->getAttribute('sucursal');
+  $tienda = $request->getAttribute('tienda');
     $consulta = "SELECT gastos_fijos_programados.id_gasto_fijo, tipo_gasto.nombre as nom_tipo, gastos_fijos_programados.descripcion, gastos_fijos_programados.cantidad,
     gastos_fijos_programados.fecha, sucursales.Pseudonimo as nom_sucursal, gastos_fijos_programados.periodicidad, 
     gastos_fijos_programados.status, status.nom_status, gastos_fijos_programados.tipo_gasto, gastos_fijos_programados.id_sucursal FROM gastos_fijos_programados
@@ -13,7 +15,7 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
        ON gastos_fijos_programados.id_sucursal = sucursales.ID_sucursal 
        INNER JOIN status
        ON gastos_fijos_programados.status = status.idstatus
-       WHERE gastos_fijos_programados.status = '1'";
+       WHERE gastos_fijos_programados.status = '1' and gastos_fijos_programados.id_sucursal = '$sucursal' and gastos_fijos_programados.id_tienda = '$tienda'";
     try{
       $db = new Db();
       $conn = $db->connect();
@@ -36,11 +38,12 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
     $cantidad = $data["cantidad"];
     $fecha = $data["fecha"];
     $id_sucursal = $data["id_sucursal"];
+    $id_tienda = $data["id_tienda"];
     $periodicidad = $data["periodicidad"];
     $status = $data["status"];
  
-    $sql = "INSERT INTO gastos_fijos_programados (tipo_gasto, descripcion, cantidad, fecha, id_sucursal, periodicidad, status) VALUES 
-            (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :periodicidad, :status)";
+    $sql = "INSERT INTO gastos_fijos_programados (tipo_gasto, descripcion, cantidad, fecha, id_sucursal, id_tienda, periodicidad, status) VALUES 
+            (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :status)";
     try {
       $db = new Db();
       $conn = $db->connect();
@@ -50,6 +53,7 @@ $app->get('/api/costos_programados/consultar', function(Request $request, Respon
         $resultado->bindParam(':cantidad', $cantidad);
         $resultado->bindParam(':fecha', $fecha);
         $resultado->bindParam(':id_sucursal', $id_sucursal);
+        $resultado->bindParam(':id_tienda', $id_tienda);
         $resultado->bindParam(':periodicidad', $periodicidad);
         $resultado->bindParam(':status', $status);
  

@@ -5,7 +5,9 @@ use App\Models\DB;
 
 //consultar gastos fijos
 
-$app->get('/api/costos_fijos/consultar', function(Request $request, Response $response){
+$app->get('/api/costos_fijos/consultar/{sucursal}/{tienda}', function(Request $request, Response $response){
+    $sucursal = $request->getAttribute('sucursal');
+    $tienda = $request->getAttribute('tienda');
     $consulta = "SELECT gastos_fijos.id_gasto, tipo_gasto.nombre as nom_tipo, gastos_fijos.descripcion, gastos_fijos.cantidad, gastos_fijos.fecha, sucursales.Pseudonimo as nom_sucursal, 
     gastos_fijos.periodicidad, gastos_fijos.status, status.nom_status, gastos_fijos.tipo_gasto,gastos_fijos.id_sucursal FROM gastos_fijos
         INNER JOIN tipo_gasto 
@@ -13,7 +15,8 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
         INNER JOIN sucursales 
         ON gastos_fijos.id_sucursal = sucursales.ID_sucursal
         INNER JOIN status
-       ON gastos_fijos.status = status.idstatus ";
+       ON gastos_fijos.status = status.idstatus 
+       WHERE   gastos_fijos.id_sucursal = '$sucursal' and gastos_fijos.id_tienda = '$tienda' ";
     try{
       $db = new Db();
       $conn = $db->connect();
@@ -36,11 +39,12 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
     $cantidad = $data["cantidad"];
     $fecha = $data["fecha"];
     $id_sucursal = $data["id_sucursal"];
+    $id_tienda = $data["id_tienda"];
     $periodicidad = $data["periodicidad"];
     $status = $data["status"];
  
-    $sql = "INSERT INTO gastos_fijos (tipo_gasto, descripcion, cantidad, fecha, id_sucursal, periodicidad, status) VALUES 
-            (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :periodicidad, :status)";
+    $sql = "INSERT INTO gastos_fijos (tipo_gasto, descripcion, cantidad, fecha, id_sucursal, id_tienda, periodicidad, status) VALUES 
+            (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :status)";
     try {
       $db = new Db();
       $conn = $db->connect();
@@ -50,6 +54,7 @@ $app->get('/api/costos_fijos/consultar', function(Request $request, Response $re
         $resultado->bindParam(':cantidad', $cantidad);
         $resultado->bindParam(':fecha', $fecha);
         $resultado->bindParam(':id_sucursal', $id_sucursal);
+        $resultado->bindParam(':id_tienda', $id_tienda);
         $resultado->bindParam(':periodicidad', $periodicidad);
         $resultado->bindParam(':status', $status);
  
