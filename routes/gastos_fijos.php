@@ -84,16 +84,19 @@ $app->get('/api/costos_fijos/consultar/{sucursal}/{tienda}', function(Request $r
  //Modificar gasto fijo
  $app->put('/api/costos_fijos/update/{id}',function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
+
     $data = $request->getParsedBody();
     $tipo_gasto = $data["tipo_gasto"];
     $descripcion = $data["descripcion"];
     $cantidad = $data["cantidad"];
     $fecha = $data["fecha"];
     $id_sucursal = $data["id_sucursal"];
+    $id_tienda = $data["id_tienda"];
     $periodicidad = $data["periodicidad"];
     $status = $data["status"];
    
-    $sql = "UPDATE gastos_fijos SET
+    $sql = "UPDATE pruebas.gastos_fijos SET tipo_gasto=:tipo_gasto, descripcion=:descripcion, cantidad=:cantidad, fecha=:fecha, id_sucursal=:id_sucursal, id_tienda=:id_tienda, periodicidad=:periodicidad, status=:status WHERE id_gasto=:id";
+    /**$sql = "UPDATE gastos_fijos SET
               tipo_gasto = :tipo_gasto,
               descripcion = :descripcion,
               cantidad = :cantidad,
@@ -101,20 +104,22 @@ $app->get('/api/costos_fijos/consultar/{sucursal}/{tienda}', function(Request $r
               id_sucursal = :id_sucursal,
               periodicidad = :periodicidad,
               status = :status
-    WHERE id_gasto = '$id' ";
+    WHERE id_gasto = '$id' ";**/
    
     try {
       $db = new Db();
       $conn = $db->connect();
-      $resultado = $conn->query($sql);
+      $resultado = $conn->prepare($sql);
 
       $resultado->bindParam(':tipo_gasto', $tipo_gasto);
       $resultado->bindParam(':descripcion', $descripcion);
       $resultado->bindParam(':cantidad', $cantidad);
       $resultado->bindParam(':fecha', $fecha);
       $resultado->bindParam(':id_sucursal', $id_sucursal);
+      $resultado->bindParam(':id_tienda', $id_tienda);
       $resultado->bindParam(':periodicidad', $periodicidad);
       $resultado->bindParam(':status', $status);
+      $resultado->bindParam(':id', $id);
  
       $resultado->execute();
    
