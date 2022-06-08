@@ -42,12 +42,11 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
     $periodicidad = $data["periodicidad"];
     $status = $data["status"];
  
-    $sql = "INSERT INTO gastos_fijos_programados (tipo_gasto, descripcion, cantidad, fecha, id_sucursal, id_tienda, periodicidad, status) VALUES 
-            (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :status)";
+    $sql = "INSERT INTO gastos_fijos_programados VALUES (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :status);";
     try {
       $db = new Db();
       $conn = $db->connect();
-      $resultado = $conn->query($sql);
+      $resultado = $conn->prepare($sql);
         $resultado->bindParam(':tipo_gasto', $tipo_gasto);
         $resultado->bindParam(':descripcion', $descripcion);
         $resultado->bindParam(':cantidad', $cantidad);
@@ -105,7 +104,7 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
     try {
       $db = new Db();
       $conn = $db->connect();
-      $resultado = $conn->query($sql);
+      $resultado = $conn->prepare($sql);
       $resultado->bindParam(':tipo_gasto', $tipo_gasto);
       $resultado->bindParam(':descripcion', $descripcion);
       $resultado->bindParam(':cantidad', $cantidad);
