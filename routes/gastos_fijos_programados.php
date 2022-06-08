@@ -41,8 +41,8 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
     $id_tienda = $data["id_tienda"];
     $periodicidad = $data["periodicidad"];
     $status = $data["status"];
- 
-    $sql = "INSERT INTO gastos_fijos_programados VALUES (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :status);";
+    $sql="INSERT INTO pruebas.gastos_fijos_programados VALUES (null,:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :estado)";
+    //$sql = "INSERT INTO gastos_fijos_programados VALUES (:tipo_gasto, :descripcion, :cantidad, :fecha, :id_sucursal, :id_tienda, :periodicidad, :status);";
     try {
       $db = new Db();
       $conn = $db->connect();
@@ -54,7 +54,8 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
         $resultado->bindParam(':id_sucursal', $id_sucursal);
         $resultado->bindParam(':id_tienda', $id_tienda);
         $resultado->bindParam(':periodicidad', $periodicidad);
-        $resultado->bindParam(':status', $status);
+        $resultado->bindParam(':estado', $status);
+        //$resultado->bindParam(':id', null);
  
         $resultado->execute();
         //echo json_encode("Nuevo gasto fijo agregado.");
@@ -88,6 +89,7 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
     $cantidad = $data["cantidad"];
     $fecha = $data["fecha"];
     $id_sucursal = $data["id_sucursal"];
+    $id_tienda = $data["id_tienda"];
     $periodicidad = $data["periodicidad"];
     $status = $data["status"];
    
@@ -97,6 +99,7 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
               cantidad = :cantidad,
               fecha  = :fecha,
               id_sucursal = :id_sucursal,
+              id_tienda = :id_tienda,
               periodicidad = :periodicidad,
               status = :status
     WHERE id_gasto_fijo = '$id' ";
@@ -110,6 +113,7 @@ $app->get('/api/costos_programados/consultar/{sucursal}/{tienda}', function(Requ
       $resultado->bindParam(':cantidad', $cantidad);
       $resultado->bindParam(':fecha', $fecha);
       $resultado->bindParam(':id_sucursal', $id_sucursal);
+      $resultado->bindParam(':id_tienda', $id_tienda);
       $resultado->bindParam(':periodicidad', $periodicidad);
       $resultado->bindParam(':status', $status);
  
