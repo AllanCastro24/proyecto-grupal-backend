@@ -2280,6 +2280,7 @@ $app->post('/enviar',function(Request $request, Response $response)
 //Function to send mail, 
 function sendVerificationEmail($name,$cartCount,$price, $middleName,$lastName,$namee,$email,$estatus,$totalprecio)
 {      
+  
    $mail = new PHPMailer;
 
    $mail->SMTPDebug=1;
@@ -2290,7 +2291,7 @@ function sendVerificationEmail($name,$cartCount,$price, $middleName,$lastName,$n
    $mail->SMTPSecure="tls";
    $mail->SMTPAuth=true;
    $mail->Username="restaurantaut2021@gmail.com";
-   $mail->Password="javier456";
+   $mail->Password="cufzcljdaaualelx";
 
    $mail->addAddress($email,"User Name");
    $mail->Subject="Detalles de su pedido";
