@@ -347,7 +347,7 @@ $app->put('/api/usuarios/modificar_pass/{id}', function(Request $request, Respon
   $id = $request->getAttribute('id');;
   $pass = $data['newPassword'];
 
-  $sql = "UPDATE pruebas.usuarios SET pass=:pass WHERE ID_usuario=:id";
+  $sql = "UPDATE usuarios SET pass=:pass WHERE ID_usuario=:id";
   try {
       $db = new Db();
       $conn = $db->connect();
