@@ -2290,8 +2290,8 @@ function sendVerificationEmail($name,$cartCount,$price, $middleName,$lastName,$n
    $mail->Port=587;
    $mail->SMTPSecure="tls";
    $mail->SMTPAuth=true;
-   $mail->Username="restaurantaut2021@gmail.com";
-   $mail->Password="cufzcljdaaualelx";
+   $mail->Username="restaurantuas@gmail.com";
+   $mail->Password="otnapcjjtichegxx";
 
    $mail->addAddress($email,"User Name");
    $mail->Subject="Detalles de su pedido";
